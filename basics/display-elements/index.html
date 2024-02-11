@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Block vs Inline Elements</title>
+    <style>
+        div,
+        p {
+            background-color: lightblue;
+            margin: 10px 0;
+        }
+
+        span,
+        a {
+            background-color: lightgreen;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        code {
+            background-color: #f2f2f2;
+            padding: 2px 5px;
+        }
+
+        blockquote {
+            color: #2465aa;
+        }
+        .quote {
+            background-color: #f2f2f2;
+            padding: 5px;
+        }
+
+        .quote::before {
+            content: attr(data-char) " ";
+        }
+        .quote::after {
+            content: " " attr(data-char);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>HTML Elements: Block vs Inline</h1>
+
+    <h2>1. Block-Level Elements</h2>
+    <div>This is a div element, which is a block-level element.</div>
+    <p>This is a p (paragraph) element, another block-level element.</p>
+
+    <h2>2. Inline Elements</h2>
+    <span class="quote" data-char="*">This is a span element,</span>
+    <span>which is an inline element.</span>
+    <a href="#">This is an anchor (link) element, also inline.</a>
+
+    <h2>3. Inline elements can be moved to a new line if the width of the container is not anough</h2>
+
+    <p style="width: 200px">
+        This is a paragraph with a very long word: <code>supercalifragilisticexpialidocious</code>
+        And this is sentence with a very long word: <span
+           >supercalifragilisticexpialidocious</span>
+    </p>
+
+    <h2>4. Inline elements can be included into block</h2>
+    <p>
+        This is a paragraph with inline elements: <b>bold</b> text and <i>italic</i> text.
+    </p>
+    <h2>5. But block elements cannot be included into inline</h2>
+    <span>
+        This a span element
+        <div>
+            This is a <b>div</b> element, which is a block-level element, inside the <b>span</b>, which is an inline
+            element.
+        </div>
+    </span>
+
+    <h2>6. Dimension controll</h2>
+    <p style="width: 441px; height: 123px">
+        Block elemetnt with styles: <code>width: 441px; height: 123px</code> 👍
+    </p>
+    <span style="width: 441px; height: 123px; padding: 10px; margin: 10px">
+        Inline elemetnt with styles: <code>width: 441px; height: 123px; padding: 10px; margin: 10px</code> 🤷‍♂️
+        Top and Bottom margins are ignored, but left and right are applied.
+        Paddings are applied, but they dont care about line height.
+    </span>
+    <span style="line-height: 3rem;">
+        Only line-height can adjust distance between rows. Even if it is another element on the row!
+    </span>
+    <h2>Inline-block</h2>
+    <span style="display: inline-block; width: 441px; height: 123px; padding: 10px; margin: 10px">
+        A span element with inline-block property with styles: <code>display: inline-block; width: 441px; height: 123px; padding: 10px; margin: 10px</code>
+        👍
+    </span>
+    <input type="text" placeholder="Input element with width: 300px; padding: 5px" style="width: 300px; padding: 5px">
+</body>
+
+</html>

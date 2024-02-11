@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>CSS Cascading</title>
+    <style>
+        p {
+            color: blue;
+        }
+
+        /* Специфический стиль для абзацев с классом 'highlight' */
+        .highlight {
+            color: red;
+        }
+
+        /* Более специфический стиль для абзацев имеющих оба класса: 'highlight' и 'yellow' */
+        .highlight.yellow {
+            color: yellow;
+        }
+
+        /* Последний объявленный стиль для абзацев с классом 'highlight' */
+        .highlight {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <p>Синий текст</p>
+    <p class="highlight">Зеленый текст</p>
+    <p>Синий текст</p>
+    <p class="yellow">Синий текст</p>
+    <p class="highlight yellow">Желтый текст</p>
+    <p>Синий текст</p>
+    <p class="highlight">Зеленый текст</p>
+    <p>Синий текст</p>
+</body>
+
+</html>
