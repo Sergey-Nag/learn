@@ -4,55 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UI Library</title>
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/latest/normalize.css" />
+    <link rel="stylesheet" href="./ui-lib.css" />
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap');
+        
         section {
+            font-family: 'Inter', sans-serif;
             padding: 20px;
             margin: 20px;
             border: 1px solid #000;
+            position: relative;
+            
         }
+        div{
+            color:rgba(241, 26, 234, 0.762);
+            background-color: rgba(246, 83, 255, 0.267);
+            height: 40%;
+            border: 1px solid lightslategrey;
+            margin: 10px 0;
+            text-align: center;
+        }
+        .card__example{
+            height: 200px;
+        }
+
     </style>
 </head>
 <body>
     <section>
-        <h1>Headers</h1>
+        <h1>Titles and description</h1>
         <hr>
         <!-- examples -->
+        <div>
+            <h1 class="title title--color">Some text</h1>
+            <h2 class="title title--size-60">Some text</h2>
+            <div class="title-group">
+                <h2 class="title">Some text</h2>
+                <p class="description">Some text</p>
+            </div>
+        </div>
+
     </section>
     <section>
         <h1>Buttons</h1>
         <hr>
         <!-- examples -->
+        <div>
+            <button class="button">Button</button>
+        </div>
+        <div>
+            <button class="button button--icon">
+                <span>Icon button</span>
+                <img src="../assets/ic-keyboard-arrow-right-48px.svg" alt="like">                
+            </button>
+        </div>
     </section>
-    <section>
+    <section >
         <h1>Cards</h1>
         <hr>
         <!-- examples -->
+        <div class="card__example">
+            <div class="card">
+                <h2 class="card__title">Some text</h2>
+            </div>
+        </div>
     </section>
     <section>
         <h1>Image</h1>
         <hr>
         <!-- examples -->
+            <div>
+                <img src="../assets/content-picture-office-chill.png" alt="" class="image__content col-30">
+                <img src="../assets/content-picture-office-chill.png" alt="" class="image__content col">
+                <img src="../assets/content-picture-office-chill.png" alt="" class="image__content col-60">
+            </div>
+
     </section>
     <section>
         <h1>Input</h1>
         <hr>
         <!-- examples text inputs-->
+        <div>
+            <div><input type="text" class="input"
+                placeholder="input text"></div>
+            <div class="input__group">
+                <input type="text" class="input" placeholder="Input text">
+                <button class="button"><img src="../assets/ic-keyboard-arrow-right-48px.svg" alt=""></button>
+            </div>
+        </div>
         <!-- examples range input-->
+        <div><input type="range" class="range-input"></div>
     </section>
     <section>
         <h1>Links</h1>
         <hr>
         <!-- examples -->
+        <div>
+            <a href="#" class="link" >Link</a>
+        </div>
+        <div><a href="#" class="link--active" >Link Active</a></div>
     </section>
     <section>
         <h1>Icons</h1>
         <hr>
         <!-- examples -->
+        <div class="icons__group">
+            <img src="../assets/001-facebook.svg" alt="">
+            <img src="../assets/003-twitter.svg" alt="">
+            <img src="../assets/004-instagram.svg" alt="">
+        </div>
     </section>
     <section>
         <h1>Layout</h1>
         <hr>
         <!-- examples with containers and cols -->
+            <div class="section-container"> section-container
+                <div class="container"> container
+                    <div class="col-30">col-30</div>
+                    <div class="col"> col</div>
+                    <div class="col-60"> col-60</div>
+                </div>
+            </div>
+            
+            
     </section>
 </body>
 </html>
