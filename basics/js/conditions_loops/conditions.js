@@ -36,6 +36,7 @@ if (number === 2 || number === 3) {
 /*
  5. Напиши функцию, которая возвращает название текущего дня недели (Понедельник, Вторник и т.д.) используя switch-case.
     P.S. Чтобы получить время (в т.ч. дату, год, день недели и т.д.) используй конструктор Date.
+    Можно через alert на странице
 */
 function todayIs() {
     // code here
@@ -52,6 +53,8 @@ console.log(todayIs()); // Среда (или другой день, в зави
         Баллы 70 - 79:      C
         Баллы 60 - 69:      D
         Балл ниже 60:       F
+
+    Можно через alert на странице
 */
 
 // Используй if-else
@@ -68,6 +71,7 @@ console.log(getGrade(20)); // F
 // Используй switch-case
 function calculateGradeSwitch(score) {
     // code here
+    
 }
 
 console.log(calculateGradeSwitch(100)); // A
