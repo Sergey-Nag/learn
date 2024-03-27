@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // alert - show a message
+        // prompt - ask for input
+        // confirm - ask for confirmation (true, false)
+        // const wantBeer = confirm("Do you want beer?")
+
+        // // if (wantBeer) {
+        // //     alert("Go to bar bitch")
+        // // } else {
+        // //     alert("Sit at home")
+        // // }
+
+        // // wantBeer ? alert("Go to bar bitch") : alert("Sit at home")
+
+
+        // alert(wantBeer ? "Go to bar bitch" : "Sit at home");
+
+        //   const age = prompt("Enter yours age")
+        //     //  if (age < 18 ) {
+        //     //     alert("go home");
+        //     //  } else if (age >=30){
+        //     //     alert("hi")
+        //     //  } else {
+        //     //     alert ("hi zoomer")
+        //     //  }
+        //     alert(
+        //         (age < 18 )
+        //             ? "go home"
+        //             : (age >=30)
+        //                 ?  "hi"
+        //                 : "hi zoomer"
+        //     )
+
+
+        // 4. Переписать на switch-case
+
+        // const number = +prompt('Введите число между 0 и 3', '');
+
+        // if (number === 0) {
+        //     alert('Вы ввели число 0');
+        // }
+
+        // if (number === 1) {
+        //     alert('Вы ввели число 1');
+        // }
+
+        // if (number === 2 || number === 3) {
+        //     alert('Вы ввели число 2, а может и 3');
+        // }
+
+        // switch (number) {
+        //     case 0:
+        //         alert('Вы ввели число 0');
+        //         break;
+        //     case 1:
+        //         alert('Вы ввели число 1');
+        //         break;
+        //     case 2:
+        //     case 3:
+        //         alert('Вы ввели число 2 , а может и 3')
+        //         break;
+        // }
+
+        const month = +prompt('Введите номер месяца', '');
+
+        function showMonth(month) {
+            switch (month) {
+                case 1:
+                    alert('Январь');
+                    break;
+                case 2:
+                    alert('Февраль');
+                    break;
+                case 3:
+                    alert('Март');
+                    break;
+                case 4:
+                    alert('Апрель');
+                    break;
+                case 5:
+                    alert('Май');
+                    break;
+                case 6:
+                    alert('Июнь');
+                    break;
+                case 7:
+                    alert('Июль');
+                    break;
+                case 8:
+                    alert('Август');
+                    break;
+                case 9:
+                    alert('Сентябрь');
+                    break;
+                case 10:
+                    alert('Октябрь');
+                    break;
+                case 11:
+                    alert('Ноябрь');
+                    break;
+                case 12:
+                    alert('Декабрь');
+                    break;
+                default:
+                    alert('В году всего 12 месяцев');
+                    break;
+            }
+        }
+    showMonth(month)
+
+
+    </script>
+</body>
+
+</html>
