@@ -163,3 +163,16 @@ function grabDoll(dolls) {
 console.log(grabDoll(["Mickey Mouse","Hello Kitty","Snow white"])) // ["Hello Kitty"]
 console.log(grabDoll(["Mickey Mouse","Hello Kitty","Hello Kitty","Barbie doll","Snow white"])) // ["Hello Kitty","Hello Kitty","Barbie doll"]
 console.log(grabDoll(["Mickey Mouse","Barbie doll","Hello Kitty","Hello Kitty","Barbie doll","Snow white"])) // ["Barbie doll","Hello Kitty","Hello Kitty"]
+
+
+
+// Fix a bug
+// const arr = [1, 2, 3, 4, 5]; // массив с числами
+// const newArr = []; // пустой массив
+
+// for (let i = arr.length; i >= 0; i--) { // итерация по массиву arr (пока текущий нидекс больше или равен 0);
+//     const currentItem = arr[i]; // сохраняем число из массива под текущим индексом в переменную
+//     newArr.push(currentItem * 2); // добавляем в конец нового массива число умноженное на 2
+// }
+
+// console.log(newArr) // [10, 8, 6, 4, 2]
