@@ -1,8 +1,13 @@
 'use strict';
 
 // 1. Функция pow(a, b), которая возводит a в степень b. Оператор ** и Math.pow не использовать.
-function pow() {
+function pow(num, pow) {
     // code here
+    let result = num;
+    for(let i = 1; i < pow; i++){
+        result = num * result;
+    }
+    return result;
 }
 
 console.log(pow(2, 3)); // 8
@@ -34,8 +39,8 @@ function moreLess() {
         console.log('Less than 100');
     }
 
-    // moreLess(50, ...); // Less than 100
-    // moreLess(150, ...); // More than 100
+    // moreLess(50); // Less than 100
+    // moreLess(150); // More than 100
 }
 
 // 4. Напиши функцию, которая принимает неогранниченное количество аргументов (чисел) и возвращает их сумму.

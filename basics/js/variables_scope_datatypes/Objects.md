@@ -361,7 +361,7 @@ const obj = { var1: 1, var2: 'second' };
 let {var1, var2} = obj;
 
 console.log(var1) // 1
-console.log(var1) // second
+console.log(var2) // second
 console.log(obj) // {var1: 1, var2: 'second'}
 ```
 Это более короткая запись такого присваивания
@@ -371,7 +371,7 @@ let var1 = obj.var1;
 let var2 = obj.var2;
 
 console.log(var1) // 1
-console.log(var1) // second
+console.log(var2) // second
 console.log(obj) // {var1: 1, var2: 'second'}
 ```
 При деструктуризации имена переменных должны совпадать с именами свойст, которые нужно получить.
