@@ -144,25 +144,29 @@ for (let i=0; i < Math.max(numbersLessThanTen.length, numbersGreaterThanTen.leng
     Необходимо обойти кукол, используя цикл for. Если кукла - "Hello Kitty" или "Barbie doll",
     её нужно поместить в bag (bag - массив, определенный в функции); 
     Если это другие строки, нужно использовать continue, чтобы пропустить их.
-
     Когда в мешке будет три элемента, мешок будет переполнен.
     Следует использовать break для выхода из цикла; 
     Если сумка не заполнена, следует пройтись по куклам до последнего элемента.
-
     Верни из функции сумку после завершения цикла for.
 */
-function grabDoll(dolls) {
-    const bag = [];
-
-    // code here
-    
-    return bag;
-}
-
-// Результат:
-console.log(grabDoll(["Mickey Mouse","Hello Kitty","Snow white"])) // ["Hello Kitty"]
-console.log(grabDoll(["Mickey Mouse","Hello Kitty","Hello Kitty","Barbie doll","Snow white"])) // ["Hello Kitty","Hello Kitty","Barbie doll"]
-console.log(grabDoll(["Mickey Mouse","Barbie doll","Hello Kitty","Hello Kitty","Barbie doll","Snow white"])) // ["Barbie doll","Hello Kitty","Hello Kitty"]
+//     function grabDoll(dolls) {
+//         const bag = [];
+//         for (let doll of dolls) {
+//             if (doll === "Hello Kitty" || doll === "Barbie doll") {
+//                 bag.push(doll);
+//                 if (bag.length === 3) {
+//                     break; 
+//                 }
+//             } else {
+//                 continue; 
+//             }
+//         }
+//         return bag;
+//     }
+// // Результат:
+// console.log(grabDoll(["Mickey Mouse","Hello Kitty","Snow white"])) // ["Hello Kitty"]
+// console.log(grabDoll(["Mickey Mouse","Hello Kitty","Hello Kitty","Barbie doll","Snow white"])) // ["Hello Kitty","Hello Kitty","Barbie doll"]
+// console.log(grabDoll(["Mickey Mouse","Barbie doll","Hello Kitty","Hello Kitty","Barbie doll","Snow white"])) // ["Barbie doll","Hello Kitty","Hello Kitty"]
 
 
 
@@ -176,3 +180,15 @@ console.log(grabDoll(["Mickey Mouse","Barbie doll","Hello Kitty","Hello Kitty","
 // }
 
 // console.log(newArr) // [10, 8, 6, 4, 2]
+
+//fixed
+const arr2 = [1, 2, 3, 4, 5]; // массив с числами
+const newArr = []; // пустой массив
+
+for (let i = arr2.length - 1; i >= 0; i--) { /* изменено на length-1, т к length имеет значение 5, что приводит i = 5, и являеться,
+по сути, ну или как я понял, за пределами массива, что и дало undefined */
+    const currentItem = arr2[i]; // сохраняем число из массива под текущим индексом в переменную
+    newArr.push(currentItem * 2); // добавляем в конец нового массива число умноженное на 2
+}
+
+console.log(newArr)

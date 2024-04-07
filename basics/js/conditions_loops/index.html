@@ -1,125 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <script>
-        // alert - show a message
-        // prompt - ask for input
-        // confirm - ask for confirmation (true, false)
-        // const wantBeer = confirm("Do you want beer?")
+      // alert - show a message
+      // prompt - ask for input
+      // confirm - ask for confirmation (true, false)
+      // const wantBeer = confirm("Do you want beer?")
 
-        // // if (wantBeer) {
-        // //     alert("Go to bar bitch")
-        // // } else {
-        // //     alert("Sit at home")
-        // // }
+      // // if (wantBeer) {
+      // //     alert("Go to bar bitch")
+      // // } else {
+      // //     alert("Sit at home")
+      // // }
 
-        // // wantBeer ? alert("Go to bar bitch") : alert("Sit at home")
+      // // wantBeer ? alert("Go to bar bitch") : alert("Sit at home")
 
+      // alert(wantBeer ? "Go to bar bitch" : "Sit at home");
 
-        // alert(wantBeer ? "Go to bar bitch" : "Sit at home");
+      //   const age = prompt("Enter yours age")
+      //     //  if (age < 18 ) {
+      //     //     alert("go home");
+      //     //  } else if (age >=30){
+      //     //     alert("hi")
+      //     //  } else {
+      //     //     alert ("hi zoomer")
+      //     //  }
+      //     alert(
+      //         (age < 18 )
+      //             ? "go home"
+      //             : (age >=30)
+      //                 ?  "hi"
+      //                 : "hi zoomer"
+      //     )
 
-        //   const age = prompt("Enter yours age")
-        //     //  if (age < 18 ) {
-        //     //     alert("go home");
-        //     //  } else if (age >=30){
-        //     //     alert("hi")
-        //     //  } else {
-        //     //     alert ("hi zoomer")
-        //     //  }
-        //     alert(
-        //         (age < 18 )
-        //             ? "go home"
-        //             : (age >=30)
-        //                 ?  "hi"
-        //                 : "hi zoomer"
-        //     )
+      // 4. Переписать на switch-case
 
+      // const number = +prompt('Введите число между 0 и 3', '');
 
-        // 4. Переписать на switch-case
+      // if (number === 0) {
+      //     alert('Вы ввели число 0');
+      // }
 
-        // const number = +prompt('Введите число между 0 и 3', '');
+      // if (number === 1) {
+      //     alert('Вы ввели число 1');
+      // }
 
-        // if (number === 0) {
-        //     alert('Вы ввели число 0');
-        // }
+      // if (number === 2 || number === 3) {
+      //     alert('Вы ввели число 2, а может и 3');
+      // }
 
-        // if (number === 1) {
-        //     alert('Вы ввели число 1');
-        // }
+      // switch (number) {
+      //     case 0:
+      //         alert('Вы ввели число 0');
+      //         break;
+      //     case 1:
+      //         alert('Вы ввели число 1');
+      //         break;
+      //     case 2:
+      //     case 3:
+      //         alert('Вы ввели число 2 , а может и 3')
+      //         break;
+      // }
 
-        // if (number === 2 || number === 3) {
-        //     alert('Вы ввели число 2, а может и 3');
-        // }
+      //     const month = +prompt('Введите номер месяца', '');
 
-        // switch (number) {
-        //     case 0:
-        //         alert('Вы ввели число 0');
-        //         break;
-        //     case 1:
-        //         alert('Вы ввели число 1');
-        //         break;
-        //     case 2:
-        //     case 3:
-        //         alert('Вы ввели число 2 , а может и 3')
-        //         break;
-        // }
+      //     function showMonth(month) {
+      //         switch (month) {
+      //             case 1:
+      //                 alert('Январь');
+      //                 break;
+      //             case 2:
+      //                 alert('Февраль');
+      //                 break;
+      //             case 3:
+      //                 alert('Март');
+      //                 break;
+      //             case 4:
+      //                 alert('Апрель');
+      //                 break;
+      //             case 5:
+      //                 alert('Май');
+      //                 break;
+      //             case 6:
+      //                 alert('Июнь');
+      //                 break;
+      //             case 7:
+      //                 alert('Июль');
+      //                 break;
+      //             case 8:
+      //                 alert('Август');
+      //                 break;
+      //             case 9:
+      //                 alert('Сентябрь');
+      //                 break;
+      //             case 10:
+      //                 alert('Октябрь');
+      //                 break;
+      //             case 11:
+      //                 alert('Ноябрь');
+      //                 break;
+      //             case 12:
+      //                 alert('Декабрь');
+      //                 break;
+      //             default:
+      //                 alert('В году всего 12 месяцев');
+      //                 break;
+      //         }
+      //     }
+      // showMonth(month)
 
-        const month = +prompt('Введите номер месяца', '');
+    //  function todayIs() {
+    //     const currentDate = new Date();
+    //     console.dir(currentDate);
+    //     const dayOfWeek = currentDate.getDay();
+    //     let dayName;
+    //     switch (dayOfWeek) {
+    //      case 0:
+    //         dayName = "Воскресенье";
+    //         break;
+    //       case 1:
+    //         dayName = "Понедельник";
+    //         break;
+    //       case 2:
+    //         dayName = "Вторник";
+    //         break;
+    //       case 3:
+    //         dayName = "Среда";
+    //         break;
+    //       case 4:
+    //         dayName = "Четверг";
+    //         break;
+    //       case 5:
+    //         dayName = "Пятница";
+    //         break;
+    //       case 6:
+    //         dayName = "Суббота";
+    //         break;
+    //       default:
+    //         dayName = "В неделе всего 7 дней!";
+    //     }
+    //     return dayName;
+    //   }
+    //   alert(todayIs());
 
-        function showMonth(month) {
-            switch (month) {
-                case 1:
-                    alert('Январь');
-                    break;
-                case 2:
-                    alert('Февраль');
-                    break;
-                case 3:
-                    alert('Март');
-                    break;
-                case 4:
-                    alert('Апрель');
-                    break;
-                case 5:
-                    alert('Май');
-                    break;
-                case 6:
-                    alert('Июнь');
-                    break;
-                case 7:
-                    alert('Июль');
-                    break;
-                case 8:
-                    alert('Август');
-                    break;
-                case 9:
-                    alert('Сентябрь');
-                    break;
-                case 10:
-                    alert('Октябрь');
-                    break;
-                case 11:
-                    alert('Ноябрь');
-                    break;
-                case 12:
-                    alert('Декабрь');
-                    break;
-                default:
-                    alert('В году всего 12 месяцев');
-                    break;
+      // const score = +prompt("Enter score")
+      // function getGrade(score) {
+      //    if (score >= 90) {
+      //            alert("A");
+      //         } else if (score >= 80 && score <= 89) {
+      //             alert("B");
+      //          } else if (score >= 70 && score <= 79) {
+      //            alert("C");
+      //        } else if (score >= 60 && score <= 69) {
+      //            alert("D");
+      //        } else {
+      //             alert("F");
+      //         }
+      //     }
+      //      getGrade(score)
+
+      //   const score = +prompt("Enter score");
+      //   switch (true) {
+      //     case score >= 90:
+      //       alert("A");
+      //       break;
+      //     case score >= 80 && score <= 89:
+      //       alert("B");
+      //       break;
+      //     case score >= 70 && score <= 79:
+      //       alert("C");
+      //       break;
+      //     case score >= 60 && score <= 69:
+      //       alert("D");
+      //       break;
+      //     default:
+      //       alert("F");
+      //   }
+      function grabDoll(dolls) {
+        const bag = [];
+        for (let doll of dolls) {
+            if (doll === "Hello Kitty" || doll === "Barbie doll") {
+                bag.push(doll);
+                if (bag.length === 3) {
+                    break; 
+                }
+            } else {
+                continue; 
             }
-        }
-    showMonth(month)
+        } 
+        return bag;
+    }
 
+    const arr = [1, 2, 3, 4, 5]; 
+const newArr = []; 
 
+for (let i = arr.length - 1; i >= 0; i--) { 
+    const currentItem = arr[i]; 
+    newArr.push(currentItem * 2); 
+}
+
+console.log(newArr)
     </script>
-</body>
-
+  </body>
 </html>
