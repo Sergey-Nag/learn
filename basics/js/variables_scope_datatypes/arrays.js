@@ -5,11 +5,15 @@
 // 1.5. Удали последний элемент массива и выведи его в консоль
 // 1.6. Добавь в начало массива Watermelon
 // 1.7. Выведи в консоль длину массива
+const newArr = ["Apple", "Orange", "Banana", "Pineapple", "Mango"]
 
-
-const arr = [10, 40, 9, 52, 116, 324, 1, 9, 3, 5, 12, 13, 14, 15];
-
-// Result: 623
+// newArr.push("Orange","Grape");
+// newArr.splice(2,1);
+// newArr.splice(1,1, "Cherry");
+// const value = newArr.pop();
+// console.log(value);
+// newArr.unshift("Watermelon");
+// console.log(newArr.length);
 
 /*
     2. Напиши функцию, которая принимает массив с числами и возвращает массив с нечетными числами
@@ -18,6 +22,23 @@ const arr = [10, 40, 9, 52, 116, 324, 1, 9, 3, 5, 12, 13, 14, 15];
 */
 const arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
+// function oddNumbers(array) {
+//     let newArr = [];
+//     for(let i = 0; i<array.length; i++) {
+//         let someNumbers = array[i]
+//         if (someNumbers % 2) {
+//             newArr.push(someNumbers)
+//         }
+//     }
+//     return newArr;
+// }
+
+function oddNumbers(array){
+    return array.filter(num => (num % 2));
+}
+
+console.log(oddNumbers(arr1));
+console.log(oddNumbers([10, 22, 33, 44, 55, 66, 77, 88, 99]));
 // Result: [1, 3, 5, 7, 9]
 
 /*
@@ -25,7 +46,7 @@ const arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     3.1 C помощью цикла for
     3.2 C помощью метода map
 */
-
+// ['apple', 'orange', 'banana'] => ['APPLE', 'ORANGE', 'BANANA']
 
 /* 
 
@@ -118,6 +139,7 @@ const arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 */
 
 
+
 /*
     9. Напиши функцию, которая принимает массив с числами и возвращает среднее арифметическое.
        Функция должна игнорировать все не числовые значения.
@@ -138,9 +160,11 @@ const arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     10.3. C помощью метода reduce
 */
 const arr2 = [1, 2, 3, 4, 5];
-
-
 // Result: 15
+
+
+const arr = [10, 40, 9, 52, 116, 324, 1, 9, 3, 5, 12, 13, 14, 15];
+// Result: 623
 
 /* 
     11. Напиши функцию, которая принимает массив и удаляет из него дубликаты
@@ -229,7 +253,7 @@ const arr2 = [1, 2, 3, 4, 5];
     1. Использовать встроенные методы массивов нельзя.
     2. Каждая функция должна принимать массив и колбэк функцию
     3. Колбэк функция должна принимать элемент массива, индекс, сам массив
-
+    
     Пример использования:
     1. forEach(arr, (el, i, arr) => {}); // ничего не возвращает
     2. filter(arr, (el, i, arr) => {}); // возвращает новый массив

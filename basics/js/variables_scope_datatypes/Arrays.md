@@ -259,7 +259,8 @@ array === array // true
 Вопрос: Что выведет консоль
 
 ```js
-console.log([] ? true : false);
+console.log([{}].toString() === {}.toString()); // ?
+console.log([] ? true : false); // ?
 ```
 
 ## Разреженные массивы
@@ -276,7 +277,7 @@ const array1 = [1];
 
 array[9] = 10;
 
-array.length; // [1, empty x 8, 10]
+array // [1, empty x 8, 10]
 array.length; // 10
 
 const array2 = [1];
@@ -464,7 +465,7 @@ console.timeEnd('map spare arr') // заканчиваем замер
         return elem === 2;
     });
 
-    elem1 // 3
+    elem1 // 2
 
     const elem2 = array.find((elem) => {
         return elem === 100;
