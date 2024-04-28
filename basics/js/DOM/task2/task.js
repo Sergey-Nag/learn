@@ -51,12 +51,13 @@ function removeTable() {
     При вызове функции sortTable('popularity', 'Desc') таблица отсортируется по столбцу popularity по убыванию.
 
     При вызове функции filterTable('creator', 'Microsoft') таблица отобразит только строки, в которых creator равен 'Microsoft'.
-    При вызове функции filterTable('creator', null) таблица отобразит все строки.
+    При вызове функции filterTable('creator', null) таблица отобразит все строки (фильтр сбросится).
+
+    При вызове функции removeTable() таблица будет удалена со страницы.
 
     * Сортировка и фильтрация работают вместе:
         При вызове функции sortTable('popularity') а затем filterTable('creator', 'Microsoft')
         таблица отсортируется по столбцу popularity и отобразит только строки, в которых creator равен 'Microsoft'.
         Результатом такого вызова будет таблица со строками в следующем порядке: C#, Typescript.
 
-    При вызове функции removeTable() таблица будет удалена со страницы.
 */
