@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+    <form class="form" id="register-form">
+        <h2 class="form-title">Register</h2>
+        <div class="form-control">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" class="form-input valid">
+            <p id="message-name-letters" class="invalid-message">Имя должно содержать только буквы</p>
+            <p id="message-name-length" class="invalid-message">Длинна имени должна быть от 1 до 20 символов</p>
+        </div>
+        <div class="form-control">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-input invalid">
+            <p id="message-email" class="invalid-message visible">Введите корректный email</p>
+        </div>
+        <div class="form-control">
+            <label for="password">Password:</label>
+            <div class="password-input">
+                <input type="password" id="password" name="password" class="form-input">
+                <button class="button-icon" type="button">
+                    <span class="icon eye-show"></span>
+                </button>
+            </div>
+            <p id="message-password-length" class="invalid-message">Длинна пароля должна быть от 6 до 20 символов</p>
+            <p id="message-password-uppercase" class="invalid-message">Пароль должен содержать хотя бы одну заглавную букву</p>
+            <p id="message-password-lowercase" class="invalid-message">Пароль должен содержать хотя бы одну строчную букву</p>
+            <p id="message-password-number" class="invalid-message">Пароль должен содержать хотя бы одну цифру</p>
+        </div>
+        <div class="form-control">
+            <label for="confirmPassword">Confirm Password:</label>
+            <div class="password-input">
+                <input type="password" id="confirmPassword" name="confirmPassword" class="form-input">
+                <button class="button-icon" type="button">
+                    <span class="icon eye-hide"></span>
+                </button>
+            </div>
+            <p id="message-confirm-password" class="invalid-message">Пароли не совпадают</p>
+        </div>
+        <button type="submit" class="form-button" disabled>Register</button>
+    </form>
+
+    <script>
+        /*
+            Написать реализацию валидации формы.
+            1. Изначально все поля не валидны и сообщения об ошибках скрыты. 
+                1.1. Кнопка отправки формы неактивна. (Дополнительно №2)
+                1.2. Как только пользователь заполнил все поля, кнопка отправки формы становится активной. (Дополнительно №2)
+            3. При отправке формы запускается валидация.
+            4. Если хоть одно поле не валидно, поле должно быть подсвечено красным цветом и показано сообщение об ошибке.
+            5. Если все поля валидны, при отправке формы вывести сообщение об успешной регистрации.
+
+            Требования к полям формы:
+                Имя:
+                    - только буквы, без пробелов и спецсимволов
+                    - длинна от 1 до 20 символов
+                Email:
+                    - корректный email
+                Пароль:
+                    - длинна от 6 до 20 символов
+                    - хотя бы одна заглавная буква
+                    - хотя бы одна строчная буква
+                    - хотя бы одна цифра
+                Подтверждение пароля:
+                    - должно совпадать с паролем
+
+            Дополнительно №1:
+                - При нажатии на кнопку с иконкой глаза, пароль должен становиться видимым и наоборот
+                  При этом иконка должна меняться с eye-show на eye-hide и наоборот
+
+            Дополнительно №2:
+                - Когда пользователь вводит данные в первый раз, то сообщения об ошибках не должны показываться
+                - После первой попытки отправить форму, сообщения об ошибках должны показаться
+                - Дальше, валидация должна происходить при каждом изменении данных в полях
+                - Если пользователь исправил ошибку, сообщение об ошибке должно скрыться а поле стать валидным и наоборот
+                - Кнопка отправки формы должна становиться активной только если все поля валидны
+
+        */
+
+        /**
+         * Функция валидации формы
+         * Возвращает true, если форма валидна, иначе false
+         * 
+         * @returns {boolean}
+         */
+        function validateForm() {
+            // 
+        }
+
+        /**
+         * Функция показывает сообщения об ошибках
+         */
+        function showValidationMessages() {
+            // проверить все поля на валидность
+            // если поле не валидно, то найти нужное сообщение об ошибке по id и показать его добавив класс visible
+            console.log('showValidationMessages');
+        }
+
+        /**
+         * Функция скрывает сообщения об ошибках
+         */
+        function hideValidationMessages() {
+            // найти все показанные сообщения об ошибках и скрыть их убрав класс visible
+            console.log('hideValidationMessages');
+        }
+
+        const form = document.getElementById('register-form');
+        form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                hideValidationMessages();
+
+                const isFormValid = validateForm();
+
+                if (isFormValid) {
+                    alert('Success');
+                } else {
+                    showValidationMessages();
+                }
+            });
+
+        form.addEventListener('change', function(event) {
+            // event содержит информацию о событии
+            // event.target содержит элемент, на котором произошло событие
+            // event.target.name содержит имя элемента (атрибут name)
+            // event.target.value содержит значение элемента
+            console.log(event.target.name, event.target.value);
+        });
+    </script>
+</body>
+</html>
