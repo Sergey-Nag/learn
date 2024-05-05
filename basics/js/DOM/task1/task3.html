@@ -36,7 +36,9 @@
          * Создает новую задачу и добавляет ее в колонку Backlog
          * @param {string} taskName - имя задачи
          */
-        function createTask(taskName) {}
+        function createTask(taskName) {
+            console.log(taskName)
+        }
 
         /**
          * Перемещает задачу в другую колонку
@@ -46,7 +48,7 @@
         function moveTask(taskElem, targetColumn) {}
 
         /**
-         * Копирует задачу в ту же колонку. Доюавляет к имени задачи слово "Copy"
+         * Копирует задачу в ту же колонку. Добавляет к имени задачи слово "Copy"
          * @param {HTMLElement} taskElem - элемент задачи
          */
         function copyTask(taskElem) {}
@@ -59,13 +61,15 @@
 
 
         /*
-            1. Реализуй функции createTask, moveTask, deleteTask.
+            1. Реализуй функции createTask, moveTask, deleteTask, copyTask.
             2. Создай 3 новые задачи и добавь их в колонку Backlog.
             3. Перемести задачу Task 2 в колонку In Progress.
             4. Удали задачу Task 3.
             5. Перемести одну из созданных задач в колонку Done.
             6. Удали все задачи из колонки Backlog.
         */
+
+        
     </script>
 </body>
 </html>

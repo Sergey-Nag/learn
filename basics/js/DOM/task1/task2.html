@@ -35,15 +35,35 @@
         <span>with span</span>
     </h2>
     <script>
-        /*
-            1. Выведи в консоль текст из всех элементов span через "," (без пробелов и переносов).
-            2. Выведи в консоль текст из элемента h2 внутри section.
-            3. Выведи в консоль текст элемента section (без тегов)
-            4. Вырежи h2 после section и замени им h2 внутри section.
-            5. Добавь 2 новых пункта в конец списока ul.
-            6. Поменяй местами первый и последний пункт списка ul.
-            7. Скопируй пункты списка ul в список ol и вставь его послде span "Text in span 2".
-        */
+        // 1. Выведи в консоль текст из всех элементов span через "," (без пробелов и переносов).
+            const spanText= document.querySelectorAll('span')
+            let result = '';
+            for( let span of spanText){
+                result += span.innerText + ","
+            }
+            console.log(result)
+        // 2. Выведи в консоль текст из элемента h2 внутри section.
+        const hText = document.querySelector('h2')
+        console.log(hText.innerText)
+        // 3. Выведи в консоль текст элемента section (без тегов)
+        const sectionText = document.querySelector('section').innerText
+        console.log(sectionText)
+        // 4. Вырежи h2 после section и замени им h2 внутри section.
+        const h2Text = document.querySelector('body>h2')
+        hText.replaceWith(h2Text)
+        // 5. Добавь 2 новых пункта в конец списка ul.
+        const liUl = document.querySelector('ul');
+        liUl.append(document.createElement('li'),document.createElement('li'))
+        // 6. Поменяй местами первый и последний пункт списка ul.
+        const ul1 = liUl.firstElementChild.cloneNode(true);
+        const ul2 = liUl.lastElementChild.cloneNode(true);
+        liUl.firstElementChild.replaceWith(ul2);
+        liUl.lastElementChild.replaceWith(ul1);
+        // 7. Скопируй пункты списка ul в список ol и вставь его после span "Text in span 2".
+        const newOl = document.createElement('ol');
+        newOl.innerHTML = liUl.innerHTML;
+        const spanText1 = document.querySelector('section>div>span')
+        spanText1.after(newOl)
     </script>
 </body>
 </html>

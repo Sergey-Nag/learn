@@ -410,7 +410,7 @@ console.log(body.getAttribute('lalala')); // null
 - `window.pageXOffset/pageYOffset` - текущая прокрутка окна
 - `window.scrollTo(pageX, pageY)` - прокрутка к определённому месту страницы
 - `window.scrollBy(x, y)` - прокрутка на определённое количество пикселей.
-- `elem.scrollIntoView(isTop = false)` - прокручивает окно к элементу elem.
+- `elem.scrollIntoView(isTop = true)` - прокручивает окно к элементу elem.
     - `isTop`:
         - `true` - верхняя часть элемента будет выровнена по верхней части видимой области `offsetParent`.
         - `false` - нижняя часть элемента будет выровнена по нижней части видимой области `offsetParent`.

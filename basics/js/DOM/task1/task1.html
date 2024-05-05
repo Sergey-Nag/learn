@@ -15,23 +15,48 @@
         </ul>
         <ol>
             <li class="first">one</li>
-            <li class="second">two</li>
+            <li class="second">two <span class="third"></span></li>
             <li class="third">three</li>
         </ol>
     </section>
+    <span class="second"></span>
     <div class="footer">
     </div>
 
     <script>
         // 1. Выберите section с id “container” без метода querySelector и с ним.
+        const section = document.getElementById('container')
+        console.log(section)
+        const sectionSelector = document.querySelector('#container')
+        console.log(sectionSelector)
         // 2. Выберите все li с классом "second".
+        const allLi = document.querySelectorAll('li.second')
+        console.log(allLi)
         // 3. Выберите li с классом "third" внутри ol .
+        const allLi1 = document.querySelector('ol li.third')
+        console.log(allLi1)
         // 4. Поместите текст “Hello” в элемент с id “container”.
+        section.innerHTML += "Hello"
+        section.prepend("Hello")
         // 5. Добавьте класс “main” элементу с классом “footer”, а затем уберите его.
+        const footerElem = document.querySelector('.footer');
+        footerElem.classList.toggle('main')
+        footerElem.classList.toggle('main')
         // 6. Создайте новый элемент li, затем добавьте в него текст "four".
-        // 7. Поместите li в элемент u.
+        const newLi = document.createElement('li');
+        newLi.innerText = "four"
+        // 7. Поместите li в элемент ul.
+        document.querySelector('ul').append(newLi)
         // 8. Сделайте зелёный фон всем li внутри ol.
+        const olLi = document.querySelectorAll('ol li');
+        for(let i=0; i<olLi.length; i++) {
+            olLi[i].style.backgroundColor = 'green'
+        }
+        // for (let li of olLi) {
+        //     li.style.backgroundColor = 'yellow'
+        // }
         // 10. Удалите div с классом “footer”.
+        document.querySelector('.footer').remove()
 
     </script>
 </body>
