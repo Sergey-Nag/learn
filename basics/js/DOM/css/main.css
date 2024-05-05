@@ -36,7 +36,9 @@ td {
     flex-direction: column;
     width: 400px;
 }
-.form, .form-input, .form-button {
+.form,
+.form-input,
+.form-button {
     border-radius: 2px;
 }
 .form-title {
@@ -135,4 +137,14 @@ td {
 .icon.eye-show {
     background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgY2xhc3M9ImJpIGJpLWV5ZS1maWxsIiBmaWxsPSJjdXJyZW50Q29sb3IiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xMC41IDhhMi41IDIuNSAwIDEgMS01IDAgMi41IDIuNSAwIDAgMSA1IDB6Ii8+PHBhdGggZD0iTTAgOHMzLTUuNSA4LTUuNVMxNiA4IDE2IDhzLTMgNS41LTggNS41UzAgOCAwIDh6bTggMy41YTMuNSAzLjUgMCAxIDAgMC03IDMuNSAzLjUgMCAwIDAgMCA3eiIvPjwvc3ZnPg==');
 }
-
+.task {
+    padding: 10px;
+    background-color: #599eff;
+    color: white;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.task:last-child {
+    margin-bottom: 0;
+}

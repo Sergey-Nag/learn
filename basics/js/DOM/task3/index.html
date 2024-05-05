@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+    <form class="form" id="register-form">
+        <h2 class="form-title">Register</h2>
+        <div class="form-control">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" class="form-input valid">
+            <p id="message-name-letters" class="invalid-message">Имя должно содержать только буквы</p>
+            <p id="message-name-length" class="invalid-message">Длинна имени должна быть от 1 до 20 символов</p>
+        </div>
+        <div class="form-control">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-input invalid">
+            <p id="message-email" class="invalid-message visible">Не корректный email</p>
+        </div>
+        <div class="form-control">
+            <label for="password">Password:</label>
+            <div class="password-input">
+                <input type="password" id="password" name="password" class="form-input">
+                <button class="button-icon" type="button">
+                    <span class="icon eye-show"></span>
+                </button>
+            </div>
+            <p id="message-password-length" class="invalid-message">Длинна пароля должна быть от 6 до 20 символов</p>
+            <p id="message-password-uppercase" class="invalid-message">Пароль должен содержать хотя бы одну заглавную букву</p>
+            <p id="message-password-lowercase" class="invalid-message">Пароль должен содержать хотя бы одну строчную букву</p>
+            <p id="message-password-number" class="invalid-message">Пароль должен содержать хотя бы одну цифру</p>
+        </div>
+        <div class="form-control">
+            <label for="confirmPassword">Confirm Password:</label>
+            <div class="password-input">
+                <input type="password" id="confirmPassword" name="confirmPassword" class="form-input">
+                <button class="button-icon" type="button">
+                    <span class="icon eye-hide"></span>
+                </button>
+            </div>
+            <p id="message-confirm-password" class="invalid-message">Пароли не совпадают</p>
+        </div>
+        <button type="submit" class="form-button" disabled>Register</button>
+    </form>
+
+    <script src="./task.js"></script>
+</body>
+</html>

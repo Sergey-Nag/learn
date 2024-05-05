@@ -17,11 +17,21 @@ const languages = [
     {name: 'Haskell', releaseDate: 1990, fileExtension: '.hs', creator: 'Simon Peyton Jones', popularity: 1},
 ];
 
+/**
+ * 
+ * Создание таблицы
+ */
 function createTable() {
     // Функция создает табдицу на странице и заполняет ее данными из массива languages.
     // Если таблица уже существует, то функция должна пересоздать таблицу.
 }
 
+/**
+ * 
+ * Сортировка таблицы
+ * @param {keyof (typeof languages[0])} column 
+ * @param {'Asc'|'Desc'} [order] - default value is 'Asc'
+ */
 function sortTable(column, order) {
     // Функция сортирует таблицу по столбцу (свойству объекта column) в порядке order ('Asc' или 'Desc').
     // Если order не передан, то по дефолту сортировка должна быть Asc.
@@ -29,6 +39,12 @@ function sortTable(column, order) {
     // Колонка, по которой происходит сортировка, должна быть выделена.
 }
 
+/**
+ * 
+ * Фильтрация таблицы
+ * @param {keyof (typeof languages[0])} column
+ * @param {string|number|null} value
+ */
 function filterTable(column, value) {
     // Функция скрывает строки таблицы, в которых значение свойства key не равно value.
     // Если значение value - число, то функция должна показать строки, в которых значение свойства равно value.
@@ -38,6 +54,10 @@ function filterTable(column, value) {
     // Колонка, по которой происходит фильтрация, должна быть выделена.
 }
 
+/**
+ * 
+ * Удаление таблицы
+ */
 function removeTable() {
     // Функция удаляет таблицу со страницы.
 }
@@ -60,4 +80,5 @@ function removeTable() {
         таблица отсортируется по столбцу popularity и отобразит только строки, в которых creator равен 'Microsoft'.
         Результатом такого вызова будет таблица со строками в следующем порядке: C#, Typescript.
 
+    P.S. Сначала сортируй/фильтруй массив, а потом обновляй таблицу на основе этого массива.
 */
