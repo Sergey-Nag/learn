@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Capturing and bubbling</title>
+    <link rel="stylesheet" href="../../DOM/css/main.css">
+    <style>
+        section,
+        section *:not(code) {
+            margin: 10px;
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+
+<body>
+    <section style="width: 50%;">
+        SECTION
+        <form>FORM
+            <div>DIV
+                <p>P</p>
+            </div>
+        </form>
+    </section>
+
+    <script>
+        for (let elem of document.querySelectorAll('*')) {
+            elem.addEventListener("click", e => {
+                alert(`Погружение: ${elem.tagName}, Фаза: ${event.eventPhase}`);
+                console.log(e.currentTarget, e.target, e.eventPhase)
+            }, true);
+            elem.addEventListener("click", e => alert(`Всплытие: ${elem.tagName}, Фаза: ${event.eventPhase}`));
+        }
+    </script>
+</body>
+
+</html>

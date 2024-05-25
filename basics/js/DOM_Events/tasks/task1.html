@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Скрыть элемент</title>
+    <link rel="stylesheet" href="../../DOM/css/main.css">
+</head>
+
+<body class="column">
+    <section class="section">
+        <input type="button" id="hider" value="Нажмите, чтобы спрятать текст" />
+
+        <div id="text">Текст</div>
+    </section>
+    <section class="section">
+        <span id="collapse">
+            <span id="closed">▶</span> <span id="openned">▼</span> Сладости (нажми меня)!
+        </span>
+        <ul>
+            <li>Пирожное</li>
+            <li>Пончик</li>
+            <li>Мёд</li>
+        </ul>
+    </section>
+
+    <section class="section">
+        <input type="text" placeholder="name" name="name">
+        <input type="text" placeholder="surname" name="surname">
+    </section>
+
+
+    <script>
+        // 1. Добавь обработчик к кнопке button, чтобы при нажатии элемент <div id="text"> исчезал.
+        // 2. Добавь обработчик для span#collapse, чтобы при нажатии список скрывался или показывался.
+        // 3. Добавь обработчик для input, чтобы при фокусе в него, в консоль выводилось сообщение "Фокус + name".
+        // 4. Добавь обработчик для input, чтобы при потере фокуса в него, в консоль выводилось сообщение "Блур + name".
+        // 5. Добавь обработчик для input, чтобы при изменении в нем, в консоль выводилось сообщение "Изменение + name".
+        // 6. Добавь обработчик для input, чтобы при нажатии клавиши в нем левой кнопкой мыщи, в консоль выводилось сообщение "ЛКМ + name".
+        // 7. Добавь обработчик для input, чтобы при нажатии клавиши в нем правой кнопкой мыщи, в консоль выводилось сообщение "ПКМ + name".
+    </script>
+</body>
+
+</html>

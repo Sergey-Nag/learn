@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal</title>
+    <link rel="stylesheet" href="../../DOM/css/main.css">
+    <style>
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        #modal.show {
+            display: block;
+        }
+        .modal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 20px
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="show-modal">Show modal</button>
+
+    <div id="modal">
+        <div class="modal">
+            <h2>Modal title</h2>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.<br> Quisquam, voluptates.
+            </p>
+            <input type="text" placeholder="some field">
+            <div>
+                <input type="checkbox" id="check">
+                <label for="check">Save</label>
+            </div>
+            <button id="close-modal">Ok</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. Пусть кнопка #show-modal показывает модальное окно #modal.
+        // 2. Пусть кнопка #close-modal закрывает модальное окно #modal.
+        // 3. При клике вне модального окна #modal, закрывай его.
+        // P.S. Чтобы показать модальное окно, добавьте класс show к #modal. Чтобы скрыть, уберите класс show.
+    </script>
+</body>
+
+</html>
