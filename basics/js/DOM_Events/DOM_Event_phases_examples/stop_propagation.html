@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop event propagation</title>
+</head>
+<body>
+    <button>
+        <span>
+            Кликни меня
+        </span>
+    </button>
+
+    <script>
+        // Bubbling phase
+        document.body.addEventListener('click', () => alert('click на body'));
+        document.querySelector('button').addEventListener('click', e => {
+            alert('click на button');
+            e.stopPropagation();
+        });
+        document.querySelector('span').addEventListener('click', () => alert('click на span'));
+    
+        // // Capturing phase
+        // document.body.addEventListener('click', () => alert('click на body'), true);
+        // document.querySelector('button').addEventListener('click', (e) => {
+        //     alert('click на button')
+        //     e.stopPropagation();
+        // }, true);
+        // document.querySelector('span').addEventListener('click', () => alert('click на span'), true);
+
+        // stopImmediatePropagation
+        // document.body.addEventListener('click', () => alert('click на body'));
+        // document.querySelector('button').addEventListener('click', (e) => {
+        //     alert('click на button')
+        //     e.stopPropagation();
+        //     // e.stopImmediatePropagation();
+        // });
+        // document.querySelector('button').addEventListener('click', (e) => {
+        //     alert('click на button')
+        //     e.stopPropagation();
+        // });
+        // document.querySelector('button').addEventListener('click', (e) => {
+        //     alert('click на button')
+        //     e.stopPropagation();
+        // });
+        // document.querySelector('span').addEventListener('click', () => alert('click на span'));
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Bubbling</title>
+    <link rel="stylesheet" href="../../DOM/css/main.css">
+    <style>
+        form,
+        form *:not(code) {
+            margin: 10px;
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+
+<body class="column">
+    <section style="width: 50%;">
+        <form onclick="alert('form')">FORM <code>onclick="alert('form')"</code>
+            <div onclick="alert('div')">DIV <code>onclick="alert('div')"</code>
+                <p onclick="alert('p')">P <code>onclick="alert('p')"</code> 
+                </p>
+            </div>
+        </form>
+    </section>
+    <section>
+        <p>
+            Клик по внутреннему <code>&lt;p&gt;</code>
+            вызовет обработчик onclick:
+        </p>
+        <ul>
+            <li>Сначала на самом <code>&lt;p&gt;</code>.</li>
+            <li>Потом на внешнем <code>&lt;div&gt;</code>.</li>
+            <li>Затем на внешнем <code>&lt;form&gt;</code>.</li>
+            <li>И так далее вверх по цепочке до самого document.</li>
+        </ul>
+
+        <img src="../assets/event-order-bubbling.svg" alt="">
+    </section>
+</body>
+
+</html>

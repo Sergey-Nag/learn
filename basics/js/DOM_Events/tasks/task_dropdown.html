@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown</title>
+    <link rel="stylesheet" href="../../DOM/css/main.css">
+    <style>
+        #dropdownMenu {
+            display: none;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #dropdownMenu.show {
+            display: block;
+        }
+
+        #dropdownMenu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #dropdownMenu ul li {
+            padding: 10px;
+            /* cursor: pointer; */
+        }
+
+        #dropdownMenu ul li:hover {
+            background-color: lightgray;
+        }
+
+        #dropdownMenu ul li input {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <button id="dropdownButton">Open Dropdown</button>
+        <div id="dropdownMenu">
+            <ul>
+                <li>
+                    <input type="checkbox" id="option-1"><label for="option-1">Option 1</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="option-2"><label for="option-2">Option 2</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="option-3"><label for="option-3">Option 3</label>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <script>
+        'use strict'
+        /*
+            Есть выпадающее меню, которое появляется при нажатии на кнопку.
+            При повторном нажатии по кнопке меню должно скрываться, в том числе если кликнуть вне меню.
+            При этом, если кликнуть на само меню, оно не должно скрываться. Чекбоксы в меню должны работать.
+        */
+    </script>
+</body>
+
+</html>
