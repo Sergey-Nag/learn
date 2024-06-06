@@ -15,7 +15,7 @@
     </section>
     <section class="section">
         <span id="collapse">
-            <span id="closed">▶</span> <span id="openned">▼</span> Сладости (нажми меня)!
+            <span id="closed" style="display: none;">▶</span> <span id="openned">▼</span> Сладости (нажми меня)!
         </span>
         <ul>
             <li>Пирожное</li>
@@ -32,12 +32,65 @@
 
     <script>
         // 1. Добавь обработчик к кнопке button, чтобы при нажатии элемент <div id="text"> исчезал.
+        let hiderButton = document.getElementById('hider');
+        hiderButton.addEventListener('click', () => {
+           let divText = document.getElementById('text');
+           if (divText !== null) {
+            divText.remove()
+           }
+        })
         // 2. Добавь обработчик для span#collapse, чтобы при нажатии список скрывался или показывался.
+        document.getElementById('collapse').addEventListener('click', () => {
+            let list = document.querySelector('ul');
+            let openArrow = document.querySelector('#openned');
+            let closeArrow = document.querySelector('#closed')
+
+            if (list.style.display === 'none' ) {
+                list.style.display = 'block';
+                closeArrow.style.display = 'none';
+                openArrow.style.display = 'inline-block';
+    
+            } else {
+                list.style.display = 'none'
+                openArrow.style.display = 'none'
+                closeArrow.style.display = 'inline-block'
+            }
+        })
         // 3. Добавь обработчик для input, чтобы при фокусе в него, в консоль выводилось сообщение "Фокус + name".
+        // function focusName(event) {
+        //     console.log(event.type +' '+ event.currentTarget.name);
+        // }
+        function focusName(event) {
+            console.log("Blur" + event.currentTarget.name);
+        }
+        // input[name="name"]
+        // input[name="surname"]
+        document.querySelector('section:last-of-type > input:first-child').addEventListener('focus', focusName);
+        document.querySelector('section > input:last-child').addEventListener('focus', focusName);
         // 4. Добавь обработчик для input, чтобы при потере фокуса в него, в консоль выводилось сообщение "Блур + name".
+        function blurName(event) {
+            console.log("Blur " + event.currentTarget.name);
+        }
+            document.querySelector('section:last-of-type > input:first-child').addEventListener('blur', blurName);
+            document.querySelector('section > input:last-child').addEventListener('blur', blurName);
         // 5. Добавь обработчик для input, чтобы при изменении в нем, в консоль выводилось сообщение "Изменение + name".
+        function changeName(event) {
+            console.log("Change " + event.currentTarget.name);
+        }
+            document.querySelector('section:last-of-type > input:first-child').addEventListener('change', changeName);
+            document.querySelector('section > input:last-child').addEventListener('change', changeName);
         // 6. Добавь обработчик для input, чтобы при нажатии клавиши в нем левой кнопкой мыщи, в консоль выводилось сообщение "ЛКМ + name".
+        function lkmName(event) {
+            console.log("LKM " + event.currentTarget.name);
+        }
+            document.querySelector('section:last-of-type > input:first-child').addEventListener('click', lkmName);
+            document.querySelector('section > input:last-child').addEventListener('click', lkmName);
         // 7. Добавь обработчик для input, чтобы при нажатии клавиши в нем правой кнопкой мыщи, в консоль выводилось сообщение "ПКМ + name".
+        function rkmName(event) {
+            console.log("RKM " + event.currentTarget.name);
+        }
+            document.querySelector('section:last-of-type > input:first-child').addEventListener('contextmenu', rkmName);
+            document.querySelector('section > input:last-child').addEventListener('contextmenu', rkmName);
     </script>
 </body>
 

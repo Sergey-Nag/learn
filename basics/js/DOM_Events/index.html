@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./script.js"></script>
+</head>
+
+<body>
+    <input id="elem" type="button" value="Нажми меня" />
+    <script>
+        function handler1(event) {
+            console.log(event);
+        };
+
+        function handler2() {
+            console.log(this)
+        }
+
+        elem.onclick = () => alert("Привет");
+        elem.addEventListener("click", handler1); // Спасибо!
+        elem.addEventListener("click", handler2); // Спасибо ещё раз!''
+        elem.addEventListener("DOMContentLoaded", function() {
+            alert("DOM построен"); // а вот так сработает
+        });
+    </script>
+</body>
+
+</html>
