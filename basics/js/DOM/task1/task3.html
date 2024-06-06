@@ -28,36 +28,90 @@
                 <td id="inProgress"></td>
                 <td id="done"></td>
             </tr>
+            <tr>
+                <td colspan="3">
+                    <button class="task" onclick="moveTaskLeft(document.querySelector('.task'))">
+                        Move Task Left
+                    </button>
+                    <button class="task" onclick="createTask('New Task')">
+                        Create Task
+                    </button>
+                    <button class="task" onclick="copyTask(document.querySelector('#backlog .task'))">    
+                        Copy Task 
+                    </button>
+                    <button class="task" onclick="deleteTask(document.querySelector('#backlog .task'))"> 
+                        Delete Task    
+                    </button>
+                    <button class="task" onclick="moveTaskRight(document.querySelector('.task'))">
+                        Move Task Right
+                    </button>
+                </td>
+            </tr>
         </tbody>
     </table>
 
     <script>
+        const columns = ['backlog', 'inProgress', 'done'];
         /**
          * Создает новую задачу и добавляет ее в колонку Backlog
          * @param {string} taskName - имя задачи
          */
-        function createTask(taskName) {
-            console.log(taskName)
-        }
+        function createTask(createNewTask) {
+            const backlogColumn = document.getElementById('backlog');
+            const taskDiv = document.createElement('div');
+            taskDiv.className = 'task';
+            taskDiv.textContent = createNewTask + " " + Math.floor(Math.random() * 100);
+            backlogColumn.appendChild(taskDiv);
+}
 
         /**
          * Перемещает задачу в другую колонку
          * @param {HTMLElement} taskElem - элемент задачи
          * @param {'backlog'|'inProgress'|'done'} targetColumn - название колонки
          */
-        function moveTask(taskElem, targetColumn) {}
 
+        function moveTask(taskElem, targetColumn) {
+            const targetColumnElem = document.getElementById(targetColumn);
+            if (targetColumnElem) {
+                targetColumnElem.append(taskElem);
+            }
+        }
+
+        function moveTaskRight(taskElem) {
+            if (!taskElem) return;
+            const currentColumn = taskElem.parentElement.id;
+            const currentIndex = columns.indexOf(currentColumn);
+            if (currentIndex < columns.length - 1) {
+                const nextColumn = columns[currentIndex + 1];
+                moveTask(taskElem, nextColumn);
+            }
+        }
+
+        function moveTaskLeft(taskElem) {
+            if (!taskElem) return;
+            const currentColumn = taskElem.parentElement.id;
+            const currentIndex = columns.indexOf(currentColumn);
+            if (currentIndex > 0) {
+                const prevColumn = columns[currentIndex - 1];
+                moveTask(taskElem, prevColumn);
+            }
+        }
         /**
          * Копирует задачу в ту же колонку. Добавляет к имени задачи слово "Copy"
          * @param {HTMLElement} taskElem - элемент задачи
          */
-        function copyTask(taskElem) {}
-
+        function copyTask(taskElem) {
+            const taskCopy = taskElem.cloneNode(true);
+            taskCopy.textContent += " Copy";
+            taskElem.parentElement.append(taskCopy);
+        }
         /**
          * Удаляет задачу
          * @param {HTMLElement} taskElem - элемент задачи
          */
-        function deleteTask(taskElem) {}
+        function deleteTask(taskElem) {
+            taskElem.remove(taskElem);
+        }
 
 
         /*
@@ -68,7 +122,23 @@
             5. Перемести одну из созданных задач в колонку Done.
             6. Удали все задачи из колонки Backlog.
         */
+        // createTask('Task 3');
+        // createTask('Task 4');
+        // createTask('Task 5');
 
+        // const task2 = document.querySelector('#backlog .task:nth-child(2)');
+        // moveTask(task2, 'inProgress');
+
+        // const task3 = document.querySelector('#backlog .task:nth-child(3)');
+        // deleteTask(task3);
+
+        // const task4 = document.querySelector('#backlog .task:nth-child(3)');
+        // moveTask(task4, 'done');
+
+        // const backlog = document.getElementById('backlog');
+        // while (backlog.firstChild) {
+        //     backlog.removeChild(backlog.firstChild);
+        // }
         
     </script>
 </body>

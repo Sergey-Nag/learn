@@ -7,18 +7,18 @@
     <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
-    <form class="form" id="register-form">
+    <form class="form" id="register-form" novalidate>
         <h2 class="form-title">Register</h2>
         <div class="form-control">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" class="form-input valid">
+            <input type="text" id="name" name="name" class="form-input">
             <p id="message-name-letters" class="invalid-message">Имя должно содержать только буквы</p>
             <p id="message-name-length" class="invalid-message">Длинна имени должна быть от 1 до 20 символов</p>
         </div>
         <div class="form-control">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" class="form-input invalid">
-            <p id="message-email" class="invalid-message visible">Не корректный email</p>
+            <input type="email" id="email" name="email" class="form-input">
+            <p id="message-email" class="invalid-message">Не корректный email</p>
         </div>
         <div class="form-control">
             <label for="password">Password:</label>
@@ -43,7 +43,7 @@
             </div>
             <p id="message-confirm-password" class="invalid-message">Пароли не совпадают</p>
         </div>
-        <button type="submit" class="form-button" disabled>Register</button>
+        <button type="submit" class="form-button">Register</button>
     </form>
 
     <script src="./task.js"></script>
