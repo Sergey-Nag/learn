@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress</title>
+</head>
+
+<body>
+
+    <div id="progress">0</div>
+    <button id="start">Start</button>
+
+    <script>
+        const max = 1000;
+        // function count() {
+        //     for (let i = 1; i <= max; i++) {
+        //         progress.innerHTML = i;
+        //     }
+        // }
+
+        function count() {
+            let i = 1;
+
+            function next() {
+                if (i <= max) {
+                    progress.innerHTML = i;
+                    i++;
+                    setTimeout(next, 0);
+                }
+            }
+
+            next();
+        }
+
+        start.addEventListener('click', () => {
+            count();
+        });
+    </script>
+
+    
+</body>
+
+</html>
