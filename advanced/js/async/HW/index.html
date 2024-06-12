@@ -21,12 +21,21 @@
          * - Вид 
          * - Статус (в виде иконки - живой, мертвый, неизвестно)
          * 
+         * 
+         * 
          * Пагинация
          * 
          * - Должна быть возможность переключаться между страницами
          * - Кнопки: Вперед и Назад
          */
 
+         fetch('https://rickandmortyapi.com/api/character')
+            .then((result) => {
+                return result.json()
+            })
+            .then((data) => {
+                console.log(data)
+            })
 
     </script>
     
