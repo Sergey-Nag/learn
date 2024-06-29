@@ -1,0 +1,162 @@
+
+:root {
+    --color-gray: #757B8A;
+    --color-accent: #24AA4A;
+    --color-border: #E8E8E9;
+    --card-radius: 16px;
+}
+
+h1,h2,h3,h4,h5,h6{
+    margin: 0;
+}
+
+/*Headers*/
+
+.title{
+    margin-bottom: 32px;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 120%;
+    font-family: 'Plus Jakarta Sans' , sans-serif;
+}
+
+
+.title--size-60{
+    font-size: 60px;
+}
+
+.title--color{
+    color: white;
+}
+
+.title-group{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 87px;
+}
+
+.title-group .title,
+.title-group .description {
+    margin-bottom: 0;
+}
+
+.description{
+    margin-bottom: 40px;
+    line-height: 160%;
+    color: var(--color-gray);
+    max-width: 465px;
+}
+
+/*Buttons*/
+
+.button {
+    padding: 16px 32px;
+    border-radius: 8px;
+    background-color: var(--color-accent);
+    color: #ffff;
+    border: none;
+    font-weight: bold;
+}
+
+.button--icon{
+    display: flex;
+    gap: 8px;
+}
+/*Cards*/
+
+.card{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 24px;
+    border-radius: var(--card-radius);
+    font-size: 16px;
+}
+
+.card__title{
+    font-family: 'Plus Jakarta Sans' , sans-serif;
+    font-size: 2.5em;
+    margin: 0 0 16px;
+}
+/*Images*/
+
+.image__content{
+    background-size: cover;
+    border-radius: var(--card-radius);
+    position: relative;
+    background-position: center;
+}
+
+/*Inputs*/
+
+.input{
+    border: none;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 14px;
+    padding-top: 14px;
+    background: none;
+}
+
+.range-input{
+    accent-color: var(--color-accent);
+}
+
+.input__group{
+    display: flex; 
+}
+
+.input__group .button{
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom: 1px solid var(--color-border);
+    padding: 0 16px;
+}
+
+.input:focus{
+    outline:none;
+    border-bottom-color: var(--color-accent);
+}
+/*Links*/
+.link{
+    text-decoration: none;
+    color: var(--color-gray);
+}
+
+.link--active {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--color-accent);
+}
+
+/*Icons*/
+.icons__group{
+    display: flex;
+    gap: 40px;
+}
+
+/*Layouts*/
+
+.section-container{
+    padding-top:112px;
+    padding-bottom:112px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.col {
+    width: 50%;
+}
+
+.col-30 {
+    width: 34%;
+}
+
+.col-60 {
+    width: 66%;
+}
