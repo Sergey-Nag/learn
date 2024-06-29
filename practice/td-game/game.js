@@ -116,14 +116,15 @@ async function intiGame() {
             y: 100,
             width: CELL_SIZE,
             height: CELL_SIZE,
-            headSpriteMap: {
-                45: textureMap.getSprite('cannon_1_top_1'),
-                90: textureMap.getSprite('cannon_1_top_2'),
-                135: textureMap.getSprite('cannon_1_top_3'),
-                180: textureMap.getSprite('cannon_1_top_4'),
-                225: textureMap.getSprite('cannon_1_top_5'),
-            }
-            // sprite: textureMap.getSprite('cannon_3_top_6', {  })
+            color: 'red',
+            // headSpriteMap: {
+            //     45: textureMap.getSprite('cannon_1_top_1'),
+            //     90: textureMap.getSprite('cannon_1_top_2'),
+            //     135: textureMap.getSprite('cannon_1_top_3'),
+            //     180: textureMap.getSprite('cannon_1_top_4'),
+            //     225: textureMap.getSprite('cannon_1_top_5'),
+            // }
+            sprite: textureMap.getSprite('cannon_3_top_6', {  })
         })
     )
 
