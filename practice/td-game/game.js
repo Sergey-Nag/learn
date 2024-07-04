@@ -57,7 +57,7 @@ async function intiGame() {
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 5, 5, 1, 6, 1, 1, 1, 1, 1],
         ],
-        // centerMap: true,
+        centerMap: true,
         tileSprites: {
             [GameMap.ENTITIES.SPAWN]: cellDirtSprite,
             [GameMap.ENTITIES.ROAD]: cellDirtSprite,

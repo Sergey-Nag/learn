@@ -1,0 +1,328 @@
+@font-face {
+    font-family: "Schwifty";
+    src: url("../HW/fonts/get_schwifty.ttf");
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #005011;
+    color: #005b1b;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    background: #0b8b0b;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 213, 110, 0.5);
+}
+
+h1 {
+    font-family: "Schwifty";
+    font-size: 100px;
+    text-shadow: 
+		-0   -1px 5px #92F387,
+		0   -1px 5px #92F387,
+		-0    1px 5px #92F387,
+		0    1px 5px #92F387,
+		-1px -0   5px #92F387,
+		1px -0   5px #92F387,
+		-1px  0   5px #92F387,
+		1px  0   5px #92F387,
+		-1px -1px 5px #92F387,
+		1px -1px 5px #92F387,
+		-1px  1px 5px #92F387,
+		1px  1px 5px #92F387,
+		-1px -1px 5px #92F387,
+		1px -1px 5px #92F387,
+		-1px  1px 5px #92F387,
+		1px  1px 5px #92F387;
+    text-align: center;
+    color: #42b4ca;
+}
+.Characters-h2{
+    font-family: "Schwifty";
+    font-size: 50px;
+    text-shadow: 
+		-0   -1px 5px #92F387,
+		0   -1px 5px #92F387,
+		-0    1px 5px #92F387,
+		0    1px 5px #92F387,
+		-1px -0   5px #92F387,
+		1px -0   5px #92F387,
+		-1px  0   5px #92F387,
+		1px  0   5px #92F387,
+		-1px -1px 5px #92F387,
+		1px -1px 5px #92F387,
+		-1px  1px 5px #92F387,
+		1px  1px 5px #92F387,
+		-1px -1px 5px #92F387,
+		1px -1px 5px #92F387,
+		-1px  1px 5px #92F387,
+		1px  1px 5px #92F387;
+    text-align: center;
+    color: #42b4ca;
+}
+
+.characters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.char-name{
+    font-family: "Schwifty";
+    text-shadow: 
+		-0   -1px 5px #92F387,
+		0   -1px 5px #92F387,
+		-0    1px 5px #92F387,
+		0    1px 5px #92F387,
+		-1px -0   5px #92F387,
+		1px -0   5px #92F387,
+		-1px  0   5px #92F387,
+		1px  0   5px #92F387,
+		-1px -1px 5px #92F387,
+		1px -1px 5px #92F387,
+		-1px  1px 5px #92F387,
+		1px  1px 5px #92F387,
+		-1px -1px 5px #92F387,
+		1px -1px 5px #92F387,
+		-1px  1px 5px #92F387,
+		1px  1px 5px #92F387;
+    color: #42b4ca;
+}
+.char-img{
+    box-shadow: 0px 0px 20px 10px #92F387;
+}
+.card {
+    perspective: 1000px;
+    width: 320px;
+    margin: 20px;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 490px;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-inner.shaking {
+    animation: shake-animation 0.5s;
+}
+
+.card-inner.opening {
+    transform: scale(1.05);
+}
+
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 145, 48, 0.3);
+}
+
+@keyframes pulseGreen {
+    0% {
+        -webkit-box-shadow: 0 0 0 0 #92f38757;
+    }
+    70% {
+        -webkit-box-shadow: 0 0 0 10px #92F387,;
+    }
+    100% {
+        -webkit-box-shadow: 0 0 0 0 #92F387,;
+    }
+}
+
+@keyframes pulseBlue {
+    0% {
+    -webkit-box-shadow: 0 0 0 0 #86ebff52;
+    }
+    70% {
+        -webkit-box-shadow: 0 0 0 10px #86ebff,;
+    }
+    100% {
+        -webkit-box-shadow: 0 0 0 0 #86ebff,;
+    }
+}
+
+.card-front {
+    font-family: "Schwifty";
+    text-shadow: 
+		-0   -1px 5px #92F387,
+		0   -1px 5px #92F387,
+		-0    1px 5px #92F387,
+		0    1px 5px #92F387,
+		-1px -0   5px #92F387,
+		1px -0   5px #92F387,
+		-1px  0   5px #92F387,
+		1px  0   5px #92F387,
+		-1px -1px 5px #92F387,
+		1px -1px 5px #92F387,
+		-1px  1px 5px #92F387,
+		1px  1px 5px #92F387,
+		-1px -1px 5px #92F387,
+		1px -1px 5px #92F387,
+		-1px  1px 5px #92F387,
+		1px  1px 5px #92F387;
+    background-color: #256a78;
+    box-shadow: 0px 0px 25px 15px #92F387;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    color: #42b4ca;
+    animation: pulseGreen 2s infinite alternate;
+}
+
+
+.card-back {
+    background-color: #3697aac4;
+    box-shadow: 0px 0px 25px 15px #86ebff;
+    animation: pulseBlue 1s infinite alternate;
+    transform: rotateY(180deg);
+    padding: 20px;
+    box-sizing: border-box;
+    color: #ffffff;
+}
+
+.card-back img {
+    max-width: 100%;
+    border-radius: 50%;
+}
+
+.card-back .status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-back .status span {
+    margin-left: 8px;
+}
+
+
+.card-back .rick-and-morty {
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: #45a29e;
+    display: none;
+}
+
+.status-icon {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.alive {
+    background-color: #00ff6a;
+}
+
+.dead {
+    background-color: #ff0000;
+}
+
+.unknown {
+    background-color: #ffcc00;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    background-color: #61c200b7;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.pagination button:hover {
+    background-color: #85d52ace;
+}
+
+.pagination button:disabled {
+    background-color: #bcf6a0;
+    cursor: not-allowed;
+}
+
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #0b8b0b;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 213, 110, 0.5);
+}
+
+.filter-input, .filter-select {
+    font-family: 'Arial', sans-serif;
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid #005b1b;
+    border-radius: 4px;
+    background-color: #42b4ca;
+    color: #005011;
+    box-shadow: 0 0 5px rgba(0, 91, 27, 0.5);
+    transition: box-shadow 0.3s;
+}
+
+.filter-input:focus, .filter-select:focus {
+    box-shadow: 0 0 10px rgba(0, 91, 27, 0.7);
+    outline: none;
+}
+
+.filter-button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    background-color: #61c200b7;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 91, 27, 0.5);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.filter-button:hover {
+    background-color: #85d52ace;
+    box-shadow: 0 0 10px rgba(0, 91, 27, 0.7);
+}
+
+.card-counter {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: #005b1b;
+    color: #42b4ca;
+    padding: 10px 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 91, 27, 0.5);
+    font-family: 'Arial', sans-serif;
+}

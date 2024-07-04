@@ -1,0 +1,243 @@
+
+{
+	"image": "texture_atlas_0.png",
+	"format": "RGBA8888",
+	"size": {
+		"w": 1024,
+		"h": 1024
+	},
+	"scale": 1,
+	"frames": [
+		{
+			"filename": "halloween_splash_bg",
+			"rotated": false,
+			"trimmed": false,
+			"sourceSize": {
+				"w": 768,
+				"h": 128
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 768,
+				"h": 128
+			},
+			"frame": {
+				"x": 1,
+				"y": 1,
+				"w": 768,
+				"h": 128
+			}
+		},
+		{
+			"filename": "replay_text",
+			"rotated": false,
+			"trimmed": false,
+			"sourceSize": {
+				"w": 222,
+				"h": 58
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 58
+			},
+			"frame": {
+				"x": 771,
+				"y": 1,
+				"w": 222,
+				"h": 58
+			}
+		},
+		{
+			"filename": "blue_gradient",
+			"rotated": false,
+			"trimmed": true,
+			"sourceSize": {
+				"w": 10,
+				"h": 270
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 10,
+				"h": 264
+			},
+			"frame": {
+				"x": 995,
+				"y": 1,
+				"w": 10,
+				"h": 264
+			}
+		},
+		{
+			"filename": "purple_gradient",
+			"rotated": false,
+			"trimmed": true,
+			"sourceSize": {
+				"w": 10,
+				"h": 270
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 10,
+				"h": 264
+			},
+			"frame": {
+				"x": 1007,
+				"y": 1,
+				"w": 10,
+				"h": 264
+			}
+		},
+		{
+			"filename": "endless_siege_title_02",
+			"rotated": false,
+			"trimmed": true,
+			"sourceSize": {
+				"w": 580,
+				"h": 219
+			},
+			"spriteSourceSize": {
+				"x": 391,
+				"y": 0,
+				"w": 189,
+				"h": 219
+			},
+			"frame": {
+				"x": 771,
+				"y": 61,
+				"w": 189,
+				"h": 219
+			}
+		},
+		{
+			"filename": "replay_bg",
+			"rotated": false,
+			"trimmed": false,
+			"sourceSize": {
+				"w": 768,
+				"h": 128
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 768,
+				"h": 128
+			},
+			"frame": {
+				"x": 1,
+				"y": 131,
+				"w": 768,
+				"h": 128
+			}
+		},
+		{
+			"filename": "splash_bg",
+			"rotated": false,
+			"trimmed": false,
+			"sourceSize": {
+				"w": 768,
+				"h": 128
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 768,
+				"h": 128
+			},
+			"frame": {
+				"x": 1,
+				"y": 261,
+				"w": 768,
+				"h": 128
+			}
+		},
+		{
+			"filename": "endless_siege_title_3",
+			"rotated": false,
+			"trimmed": true,
+			"sourceSize": {
+				"w": 580,
+				"h": 219
+			},
+			"spriteSourceSize": {
+				"x": 407,
+				"y": 0,
+				"w": 173,
+				"h": 219
+			},
+			"frame": {
+				"x": 771,
+				"y": 282,
+				"w": 173,
+				"h": 219
+			}
+		},
+		{
+			"filename": "txt_daily_strategists",
+			"rotated": false,
+			"trimmed": false,
+			"sourceSize": {
+				"w": 577,
+				"h": 40
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 577,
+				"h": 40
+			},
+			"frame": {
+				"x": 1,
+				"y": 391,
+				"w": 577,
+				"h": 40
+			}
+		},
+		{
+			"filename": "endless_siege_title_01",
+			"rotated": false,
+			"trimmed": true,
+			"sourceSize": {
+				"w": 580,
+				"h": 219
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 13,
+				"w": 558,
+				"h": 201
+			},
+			"frame": {
+				"x": 1,
+				"y": 433,
+				"w": 558,
+				"h": 201
+			}
+		},
+		{
+			"filename": "clashdome_logo",
+			"rotated": false,
+			"trimmed": false,
+			"sourceSize": {
+				"w": 400,
+				"h": 225
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 400,
+				"h": 225
+			},
+			"frame": {
+				"x": 561,
+				"y": 503,
+				"w": 400,
+				"h": 225
+			}
+		}
+	]
+}

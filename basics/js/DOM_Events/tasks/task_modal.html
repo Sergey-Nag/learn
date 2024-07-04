@@ -7,18 +7,18 @@
     <title>Modal</title>
     <link rel="stylesheet" href="../../DOM/css/main.css">
     <style>
-        #modal {
-            display: none;
+        .backdrop {
             position: fixed;
+            display: block;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
         }
-        #modal.show {
+        /* #modal.show {
             display: block;
-        }
+        } */
         .modal {
             position: absolute;
             top: 50%;
@@ -39,22 +39,65 @@
 
     <button id="show-modal">Show modal</button>
 
-    <div id="modal">
-        <div class="modal">
-            <h2>Modal title</h2>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.<br> Quisquam, voluptates.
-            </p>
-            <input type="text" placeholder="some field">
-            <div>
-                <input type="checkbox" id="check">
-                <label for="check">Save</label>
+    <template id="modal">
+        <div class="backdrop">
+            <div class="modal">
+                <h2>Modal title</h2>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.<br> Quisquam, voluptates.
+                </p>
+                <input type="text" placeholder="some field">
+                <div>
+                    <input type="checkbox" id="check">
+                    <label for="check">Save</label>
+                </div>
+                <button id="close-modal">Ok</button>
             </div>
-            <button id="close-modal">Ok</button>
         </div>
-    </div>
+    </template>
 
     <script>
+        let template = document.getElementById('modal')
+        console.dir(template)
+        let openButton = document.getElementById("show-modal");
+
+        // let modalWindow = document.getElementById('modal');
+        // let closeButton = document.getElementById("close-modal")
+        // console.log(modalWindow, closeButton)
+
+        openButton.addEventListener('click', (event)=>{
+            let modalContent = template.content.cloneNode(true);
+            document.body.append(modalContent);
+            let backdrop = document.querySelector('.backdrop')
+            let closeButton = document.getElementById("close-modal");
+            let backdropFunc = (event) => {
+                console.dir(modalContent)
+                backdrop.remove();
+                closeButton.removeEventListener('click',backdropFunc);
+                backdrop.removeEventListener('click',backdropRemove);
+            }
+            let backdropRemove = (event) => {
+                if (event.target === event.currentTarget){
+                    backdrop.remove();
+                    closeButton.removeEventListener('click',backdropFunc);
+                    backdrop.removeEventListener('click',backdropRemove);
+                }
+            }
+            closeButton.addEventListener('click', backdropFunc);
+            backdrop.addEventListener('click',backdropRemove);
+        }
+    )
+
+        // closeButton.addEventListener('click', (event)=>{
+        //     modalWindow.classList.remove('show');
+        // })
+        // modalWindow.addEventListener('click', (event)=>{
+        //     // console.log(event.target, event.currentTarget)
+        //     if (event.target === event.currentTarget){
+        //         modalWindow.classList.remove('show');
+        //     }
+        // })
+
         // 1. Пусть кнопка #show-modal показывает модальное окно #modal.
         // 2. Пусть кнопка #close-modal закрывает модальное окно #modal.
         // 3. При клике вне модального окна #modal, закрывай его.

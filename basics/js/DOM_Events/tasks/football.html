@@ -16,9 +16,14 @@
             border: 10px solid black;
             background-color: #00FF00;
             overflow: hidden;
+            position: relative;
         }
 
         #ball {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            transition: transform 0.5s ease, rotate 0.5s ease;
             /* Стили для мяча */
         }
     </style>
@@ -38,6 +43,49 @@
     </section>
 
     <script>
+    //     let angle = 0;
+    //     document.getElementById('field').addEventListener('click', function (event) {
+    //     const field = this;
+    //     const ball = document.getElementById('ball');
+    //     const ballSize = 40;
+
+    //     const fieldPos = field.getBoundingClientRect();
+    //     const clickX = event.clientX - fieldPos.left;
+    //     const clickY = event.clientY - fieldPos.top;
+
+    //     let newX = clickX - ballSize / 2;
+    //     let newY = clickY - ballSize / 2;
+
+    //     if (newX < 0) newX = 0;
+    //     if (newY < 0) newY = 0;
+    //     if (newX + ballSize > field.clientWidth) newX = field.clientWidth - ballSize;
+    //     if (newY + ballSize > field.clientHeight) newY = field.clientHeight - ballSize;
+    //     angle += 360;
+    //     ball.style.transform = `translate(${newX}px, ${newY}px) rotate(${angle}deg)`;
+    // });
+
+//Test
+
+        let angle = 0; 
+        function moveBall(event) {
+            const field = document.getElementById('field');
+            const ball = document.getElementById('ball');
+            const ballSize = 40;
+            const clickX = event.clientX;
+            const clickY = event.clientY;
+            const fieldPos = field.getBoundingClientRect();
+            let newX = clickX - fieldPos.left - ballSize / 2;
+            let newY = clickY - fieldPos.top - ballSize / 2;
+            if (newX < 0) newX = 0;
+            if (newY < 0) newY = 0;
+            if (newX + ballSize > field.clientWidth) newX = field.clientWidth - ballSize;
+            if (newY + ballSize > field.clientHeight) newY = field.clientHeight - ballSize;
+            angle += 360;
+            ball.style.transform = `translate(${newX}px, ${newY}px) rotate(${angle}deg)`;
+        }
+        document.addEventListener('click', moveBall);
+
+//Test
         /*
             Пусть мяч перемещается при клике на поле, туда, куда был клик.
             Требования:

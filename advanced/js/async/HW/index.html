@@ -3,41 +3,316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rick and Morty Database</title>
+    <title>Rick and Morty Characters</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+    <div class="container">
+        <h1>Rick and Morty</h1>
+        <h2 class="Characters-h2">Characters</h2>
+        <div class="filter-container">
+            <input type="text" id="name-input" placeholder="Name" class="filter-input"/>
+            <select id="status-select" class="filter-select">
+                <option value="">Status</option>
+                <option value="alive">Alive</option>
+                <option value="dead">Dead</option>
+                <option value="unknown">Unknown</option>
+            </select>
+            <input type="text" id="species-input" placeholder="Species" class="filter-input"/>
+            <select id="gender-select" class="filter-select">
+                <option value="">Gender</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="genderless">Genderless</option>
+                <option value="unknown">Unknown</option>
+            </select>
+            <button id="filter-button" class="filter-button">Submit</button>
+        </div>
+        <div id="characters" class="characters"></div>
+        <div class="pagination">
+            <button id="prev" onclick="prevPage()">Назад</button>
+            <span id="page-info"></span>
+            <button id="next" onclick="nextPage()">Вперед</button>
+        </div>
+        <div id="card-counter" class="card-counter">Открыто: 0</div>
+    </div>
     <script>
-        /**
-         * https://rickandmortyapi.com/documentation/#rest
-         * 
-         * https://rickandmortyapi.com/api/character - get all characters
-         * 
-         * 
-         * При загрузке страницы, загрузить всех персонажей и вывести их (в каком-то виде) на страницу
-         * - Фото
-         * - Имя
-         * - Локация
-         * - Вид 
-         * - Статус (в виде иконки - живой, мертвый, неизвестно)
-         * 
-         * 
-         * 
-         * Пагинация
-         * 
-         * - Должна быть возможность переключаться между страницами
-         * - Кнопки: Вперед и Назад
-         */
+        /*
+            Конструктор Characters(containerElement, counterElement, previousPageButton, nextPageButton, pageInfoElement)
+            - renderCards(characters)
+            - openCards:
+                setter должен обновлять элемент на странице
+                getter просто возвращает значение
+            - updatePagination(paginationInfo)
+            - showError(errorMessage)
+        
+            Должен только загружать данные и возвращать промис с результатом или ошибкой
+        */
 
-         fetch('https://rickandmortyapi.com/api/character')
-            .then((result) => {
-                return result.json()
-            })
-            .then((data) => {
-                console.log(data)
-            })
+        // region функция обработки клика по карточке персонажа
+        // function cardClick() {
+        //     const cardInner = this.querySelector('.card-inner');
+        //     const image = this.querySelector('.char-img');
+        //     image.src = image.dataset.src;
+        //     cardInner.classList.add('opening');
+        //     setTimeout(() => {
+        //         cardInner.classList.remove('opening');
+        //     }, 300);
 
+        //     setTimeout(() => {
+        //         this.classList.toggle('flipped');
+        //         if (this.classList.contains('flipped') && !this.classList.contains('opened')) {
+        //             charController.openCards++;
+        //             this.classList.add('opened');
+        //         }
+        //     }, 800);
+        // }
+
+        // region конструктор Characters
+        class DataControllerNew {
+            loadCharacters(page, name, status, species, gender) {
+                let url = this.getUrl(page, name, status, species, gender)
+                return fetch(url)
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.json();
+                        } else if (response.status === 404) {
+                            throw new Error('Characters not found');
+                        }
+                        throw new Error('Something went wrong. Try again');
+                    });
+            };
+            getUrl(page, name, status, species, gender){
+                let url = `https://rickandmortyapi.com/api/character?page=${page}`;
+                if (name) url += `&name=${name}`;
+                if (status) url += `&status=${status}`;
+                if (species) url += `&species=${species}`;
+                if (gender) url += `&gender=${gender}`;
+                return url;
+            }
+        }
+            
+
+
+        function DataController() {
+            this.loadCharacters = function(page, name, status, species, gender) {
+                let url = `https://rickandmortyapi.com/api/character?page=${page}`;
+                if (name) url += `&name=${name}`;
+                if (status) url += `&status=${status}`;
+                if (species) url += `&species=${species}`;
+                if (gender) url += `&gender=${gender}`;
+
+                return fetch(url)
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.json();
+                        } else if (response.status === 404) {
+                            throw new Error('Characters not found');
+                        }
+
+                        throw new Error('Something went wrong. Try again');
+                    });
+            };
+        }
+        //region конструктор CharController
+        function CharController(containerElement, counterElement, previousPageButton, nextPageButton, pageInfoElement) {
+            this.containerElement = containerElement;
+            this.counterElement = counterElement;
+            this.previousPageButton = previousPageButton;
+            this.nextPageButton = nextPageButton;
+            this.pageInfoElement = pageInfoElement;
+            this._openCards = 0;
+
+            //region get and set для openCards
+            Object.defineProperty(this, 'openCards', {
+                get() {
+                    return this._openCards;
+                },
+                set(value) {
+                    this._openCards = value;
+                    this.counterElement.textContent = `Открыто: ${this._openCards}`;
+                }
+            });
+
+            this.cardClick = function (cardElement) {
+                const cardInner = cardElement.querySelector('.card-inner');
+                const image = cardElement.querySelector('.char-img');
+                image.src = image.dataset.src;
+                cardInner.classList.add('opening');
+                setTimeout(() => {
+                    cardInner.classList.remove('opening');
+                }, 300);
+
+                setTimeout(() => {
+                    cardElement.classList.toggle('flipped');
+                    if (cardElement.classList.contains('flipped') && !cardElement.classList.contains('opened')) {
+                        this.openCards++;
+                        cardElement.classList.add('opened');
+                    }
+                }, 800);
+            }
+
+            //region обработчик кликов по карточкам
+            this.containerElement.addEventListener('click', (e) => {
+                const cardElement = e.target.closest('.card');
+                if (cardElement) {
+                    // cardClick.call(cardElement);
+                    this.cardClick(cardElement)
+                }
+            });
+            
+            //region метод для рендеринга карточек персонажей
+            this.renderCards = function(characters) {
+                this.containerElement.innerHTML = '';
+                characters.forEach(character => {
+                    const cardElement = document.createElement('div');
+                    cardElement.classList.add('card');
+                    const statusClass = character.status.toLowerCase();
+                    cardElement.innerHTML = `
+                        <div class="card-inner">
+                            <div class="card-front">Rick and Morty</div>
+                            <div class="card-back">
+                                <img data-src="${character.image}" alt="${character.name}" class="char-img">
+                                <h2 class="char-name">${character.name}</h2>
+                                <p>Локация: ${character.location.name}</p>
+                                <p>Вид: ${character.species}</p>
+                                <div class="status">
+                                    <div class="status-icon ${statusClass}"></div>
+                                    <span>${character.status}</span>
+                                </div>
+                                <div class="rick-and-morty">Rick and Morty</div>
+                            </div>
+                        </div>
+                    `;
+                    this.containerElement.append(cardElement);
+                });
+            };
+
+            //region метод для обновления информации о пагинации
+            this.updatePagination = function(paginationInfo) {
+                this.previousPageButton.disabled = !paginationInfo.prev;
+                this.nextPageButton.disabled = !paginationInfo.next;
+                this.pageInfoElement.textContent = `Page ${currentPage} of ${paginationInfo.pages}`;
+            };
+
+            this.emptyCards = function () {
+                this.containerElement.innerHTML = '';
+            }
+
+            //region метод для отображения ошибок
+            this.showError = function(errorMessage) {
+                alert(errorMessage);
+            };
+        }
+
+        // region счетчик карточек
+        let cardsCounter = document.getElementById('card-counter');
+        let charController = new CharController(
+            document.getElementById('characters'),
+            cardsCounter,
+            document.getElementById('prev'),
+            document.getElementById('next'),
+            document.getElementById('page-info')
+        );
+
+        let dataController = new DataControllerNew();
+        let currentPage = 1;
+        
+        const nameElement = document.getElementById('name-input')
+        const statusElement = document.getElementById('status-select')
+        const speciesElement = document.getElementById('species-input')
+        const genderElement = document.getElementById('gender-select');
+        // region загрузка персонажей при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAndDisplayDataPerPage(currentPage);
+        });
+
+        // region обработчик нажатия кнопки фильтра
+        const filterButton = document.getElementById('filter-button');
+
+        function loadAndDisplayDataPerPage(currentPage) {
+            const name = nameElement.value.trim();
+            const status = statusElement.value;
+            const species = speciesElement.value.trim();
+            const gender = genderElement.value;
+            dataController.loadCharacters(currentPage, name, status, species, gender)
+                .then(data => {
+                    charController.renderCards(data.results);
+                    charController.updatePagination(data.info);
+                })
+                .catch(error => {
+                    charController.emptyCards();
+                    charController.showError(error)
+                });
+        }
+
+        filterButton.addEventListener('click', () => {
+            currentPage = 1;
+            loadAndDisplayDataPerPage(currentPage);
+        });
+
+        // region обработчик для кнопки предыдущей страницы
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                loadAndDisplayDataPerPage(currentPage);
+            }
+        }
+
+        // region обработчик для кнопки следующей страницы
+        function nextPage() {
+            currentPage++;
+            loadAndDisplayDataPerPage(currentPage);
+        }
+        /*
+            Контроллер Characters(containerElement, counterElement, previousPageButton, nextPageButton, pageInfoElement)
+                - updatePagination(paginationInfo)
+                - showError(errorMessage)
+        
+            Должен только загружать данные и возвращать промис с результатом или ошибкой
+
+            loadCharacters(page, status, species, gender)
+                .then((data) => {
+                    charactersController.renderCards(data.results);
+                    charactersController.updatePagination(data.info);
+                })
+                .catch((error) => {
+                    charactersController.showError(error);
+                })
+        */
+        // function loadCharacters(page) {
+        //     const name = document.getElementById('name-input').value.trim();
+        //     const status = document.getElementById('status-select').value;
+        //     const species = document.getElementById('species-input').value.trim();
+        //     const gender = document.getElementById('gender-select').value;
+
+        //     let url = `https://rickandmortyapi.com/api/character?page=${page}`;
+        //     if (name) url += `&name=${name}`;
+        //     if (status) url += `&status=${status}`;
+        //     if (species) url += `&species=${species}`;
+        //     if (gender) url += `&gender=${gender}`;
+
+        //     fetch(url)
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             charactersController.renderCards(data.results);
+        //             charactersController.updatePagination(data.info);
+        //         })
+        //         .catch(error => charactersController.showError('Character not found'));
+        // }
+
+        // function prevPage() {
+        //     if (currentPage > 1) {
+        //         currentPage--;
+        //         loadCharacters(currentPage);
+        //     }
+        // }
+
+        // function nextPage() 
+        //     currentPage++;
+        //     loadCharacters(currentPage);
     </script>
-    
 </body>
 </html>
+
+        

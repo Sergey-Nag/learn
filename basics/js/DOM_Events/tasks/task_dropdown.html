@@ -60,7 +60,22 @@
 
     <script>
         'use strict'
-        /*
+        
+            const dropdownButton = document.getElementById('dropdownButton');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            const checkBoxes = document.querySelector('ul')
+
+            dropdownButton.addEventListener('click', (event) => {
+                dropdownMenu.classList.toggle('show');
+                event.stopPropagation();
+            });
+            document.addEventListener('click', (event) =>{
+                if (event.target.closest('#dropdownMenu') !== dropdownMenu){
+                    dropdownMenu.classList.remove('show');
+                }
+                console.log(event.target)
+            })
+            /*
             Есть выпадающее меню, которое появляется при нажатии на кнопку.
             При повторном нажатии по кнопке меню должно скрываться, в том числе если кликнуть вне меню.
             При этом, если кликнуть на само меню, оно не должно скрываться. Чекбоксы в меню должны работать.
