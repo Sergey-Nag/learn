@@ -23,83 +23,76 @@
 
 */
 const CELL_SIZE=50;
+const gameSpeed = 1;
 const canvas = document.getElementById('game');
 
-class CannonTower extends Tower {
+const towerHeadOffset = -15;
+const enemyScale = 0.7;
+const enemyAnimationFrameDuration = 0.055;
+
+class BaseTower extends Tower {
     constructor(options) {
-    super(options);
-    this.headSpriteMap = options.headSpriteMap || {};
-    this.currentSprite = null;
+        super(options);
+        this.headSprite = options.headSprite || null;
+        this.headAngle = 0;
+    }
+
+    update(state) {
+        super.update(state);
+
+        if (this.target) {
+            this.headAngle = this.calculateAngle(this.target.centerX, this.target.centerY);
+        }
+
+        if (this.headSprite) {
+            this.headSprite.update(state);
+        }
+    }
+
+    render(ctx, debug) {
+        super.render(ctx, debug);
+
+        if (this.headSprite) {
+            this.headSprite.render(ctx, this.centerX, this.centerY)
+        }
     }
 
     calculateAngle(targetX, targetY) {
-    const dx = targetX - this.x;
-    const dy = targetY - this.y;
-    const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-    return angle;
-    }
-
-    updateSprite(targetX, targetY) {
-    const angle = this.calculateAngle(targetX, targetY);
-    let closestAngle = Object.keys(this.headSpriteMap).reduce((prev, curr) => {
-        return Math.abs(curr - angle) < Math.abs(prev - angle) ? curr : prev;
-    });
-    this.currentSprite = this.headSpriteMap[closestAngle];
-    }
-
-    draw(context) {
-    if (this.currentSprite) {
-        context.drawImage(
-        this.currentSprite,
-        this.x - this.width / 2,
-        this.y - this.height / 2,
-        this.width,
-        this.health
-        );
-    }
+        const dx = targetX - this.x;
+        const dy = targetY - this.y;
+        const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+        return angle;
     }
 
     getDistanceToEnemy(enemy) {
-    const distance = Math.sqrt((this.x - enemy.x) ** 2 + (this.y - enemy.y) ** 2);
-    return distance - enemy.width / 2;
+        const distance = Math.sqrt((this.x - enemy.x) ** 2 + (this.y - enemy.y) ** 2);
+        return distance - enemy.width / 2;
     }
 }
 
-class NewEnemy extends Enemy {
+class BaseEnemy extends Enemy {
     constructor(options) {
-    super(options);
-    this.spriteMap = options.spriteMap || {};
-    this.currentSprite = null;
-    this.direction = 'right';
-    }
-
-    updateDirection(dx, dy) {
-    if (dx > 0) {
-        this.spriteMap.getSprite = 'enemy_runner_right_01'
+        super(options);
+        this.spriteMap = options.spriteMap || {};
+        this.currentEnemySprite = this.enemySpriteMap?.[0]
         this.direction = 'right';
-    } else if (dx < 0) {
-        this.spriteMap.getSprite = 'enemy_runner_left_01'
-        this.direction = 'left';
-    } else if (dy > 0) {
-        this.spriteMap.getSprite = 'enemy_runner_front_01'
-        this.direction = 'down';
-    } else if (dy < 0) {
-        this.spriteMap.getSprite = 'enemy_runner_back_01'
-        this.direction = 'up';
-    }
-    this.currentSprite = this.spriteMap[this.direction];
+        this.sprite = this.spriteMap.right;
     }
 
-    draw(context) {
-    if (this.currentSprite) {
-        context.drawImage(
-        this.currentSprite,
-        this.x - this.width / 2,
-        this.y - this.height / 2,
-        this.width,
-        this.health
-        );
-    }
+    update(state) {
+        super.update(state);
+
+        if (this.isMovingRight) {
+            this.direction = 'right';
+        } else if (this.isMovingLeft) {
+            this.direction = 'left';
+        } else if (this.isMovingDown) {
+            this.direction = 'down';
+        } else if (this.isMovingUp) {
+            this.direction = 'up';
+        }
+
+        this.sprite = this.spriteMap[this.direction];
     }
 }
 
@@ -112,11 +105,78 @@ const enemyMap = new AtlasTileMap({
     tilesDataPath: 'assets/texture_atlas_2.json'
 })
 
+class CannonTower extends BaseTower {
+    constructor({ x, y }) {
+        super({
+            x,
+            y,
+            width: CELL_SIZE,
+            height: CELL_SIZE,
+            range: 100,
+            fireRate: 5,
+            bulletClass: Bullet,
+            bulletOptions: {
+                speed: 200,
+                damage: 5,
+                sprite: textureMap.getSprite('granade', { scale: 0.6, rotate: 10 }),
+            },
+            bulletOffset: {
+                x: 0,
+                y: towerHeadOffset
+            },
+            sprite: textureMap.getSprite('fire_1_base', { scale: 0.7, y: -5 }),
+            headSprite: textureMap.getSprite('cannon_1_top_1', { scale: 0.7, y: towerHeadOffset}),
+        })
+
+        this.headSpriteMap = {
+            0: textureMap.getSprite('cannon_1_top_1', { scale: 0.7, y: towerHeadOffset}),
+            15: textureMap.getSprite('cannon_1_top_2', { scale: 0.7, y: towerHeadOffset}),
+            30: textureMap.getSprite('cannon_1_top_3', { scale: 0.7, y: towerHeadOffset}),
+            45: textureMap.getSprite('cannon_1_top_4', { scale: 0.7, y: towerHeadOffset}),
+            60: textureMap.getSprite('cannon_1_top_5', { scale: 0.7, y: towerHeadOffset}),
+            75: textureMap.getSprite('cannon_1_top_6', { scale: 0.7, y: towerHeadOffset}),
+            90: textureMap.getSprite('cannon_1_top_7', { scale: 0.7, y: towerHeadOffset}),
+            105: textureMap.getSprite('cannon_1_top_8', { scale: 0.7, y: towerHeadOffset}),
+            120: textureMap.getSprite('cannon_1_top_9', { scale: 0.7, y: towerHeadOffset}),
+            135: textureMap.getSprite('cannon_1_top_10', { scale: 0.7, y: towerHeadOffset}),
+            150: textureMap.getSprite('cannon_1_top_11', { scale: 0.7, y: towerHeadOffset}),
+            165: textureMap.getSprite('cannon_1_top_12', { scale: 0.7, y: towerHeadOffset}),
+            180: textureMap.getSprite('cannon_1_top_13', { scale: 0.7, y: towerHeadOffset}),
+            [-165]: textureMap.getSprite('cannon_1_top_14', { scale: 0.7, y: towerHeadOffset}),
+            [-150]: textureMap.getSprite('cannon_1_top_15', { scale: 0.7, y: towerHeadOffset}),
+            [-135]: textureMap.getSprite('cannon_1_top_16', { scale: 0.7, y: towerHeadOffset}),
+            [-120]: textureMap.getSprite('cannon_1_top_17', { scale: 0.7, y: towerHeadOffset}),
+            [-105]: textureMap.getSprite('cannon_1_top_18', { scale: 0.7, y: towerHeadOffset}),
+            [-90]: textureMap.getSprite('cannon_1_top_19', { scale: 0.7, y: towerHeadOffset}),
+            [-75]: textureMap.getSprite('cannon_1_top_20', { scale: 0.7, y: towerHeadOffset}),
+            [-60]: textureMap.getSprite('cannon_1_top_21', { scale: 0.7, y: towerHeadOffset}),
+            [-45]: textureMap.getSprite('cannon_1_top_22', { scale: 0.7, y: towerHeadOffset}),
+            [-30]: textureMap.getSprite('cannon_1_top_23', { scale: 0.7, y: towerHeadOffset}),
+            [-15]: textureMap.getSprite('cannon_1_top_24', { scale: 0.7, y: towerHeadOffset}),
+        };
+    }
+
+    update(state) {
+        super.update(state);
+
+        if (this.target) {
+            this.updateHeadSprite();
+        }
+    }
+
+    updateHeadSprite() {
+        let closestAngle = Object.keys(this.headSpriteMap).reduce((prev, curr) => {
+            return Math.abs(curr - this.headAngle) < Math.abs(prev - this.headAngle) ? curr : prev;
+        });
+        this.headSprite = this.headSpriteMap[closestAngle];
+    }
+}
+
+
 let map, game;
 async function initGame() {
     try {
-        await textureMap.load();
-        await enemyMap.load();
+        await Promise.all([textureMap.load(), enemyMap.load()])
     } catch(e) {
         console.log(e)
     }
@@ -127,8 +187,11 @@ async function initGame() {
     map = new GameMap({
     map: [
         [1, 5, 1, 5, 1, 5, 1, 5, 1, 5],
-        [3, 2, 2, 2, 2, 2, 2, 2, 2, 4],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [3, 2, 2, 2, 1, 2, 2, 2, 2, 4],
+        [1, 1, 1, 2, 1, 2, 1, 1, 1, 1],
+        [1, 1, 1, 2, 1, 2, 2, 1, 1, 1],
+        [1, 1, 1, 2, 1, 1, 2, 1, 1, 1],
+        [1, 5, 5, 2, 2, 2, 2, 1, 1, 1],
         [1, 5, 5, 1, 6, 1, 1, 1, 1, 1],
     ],
     centerMap: true,
@@ -166,7 +229,7 @@ async function initGame() {
         canvas,
         map,
         cellSize: CELL_SIZE,
-        gameSpeed: 1,
+        gameSpeed,
         frameRate: 60,
         width: 1000,
         height: 500,
@@ -184,7 +247,61 @@ async function initGame() {
     game.start();
 
     setInterval(() => {
-        const enemy = new Enemy({
+        const enemy = new BaseEnemy({
+        spriteMap: {
+            right: enemyMap.getAnimatedSprite([
+                'enemy_runner_right_01',
+                'enemy_runner_right_02',
+                'enemy_runner_right_03',
+                'enemy_runner_right_04',
+                'enemy_runner_right_05',
+                'enemy_runner_right_06',
+                'enemy_runner_right_07',
+                'enemy_runner_right_08',
+                'enemy_runner_right_09',
+                'enemy_runner_right_10',
+                'enemy_runner_right_11',
+            ], { scale: enemyScale, frameDuration: enemyAnimationFrameDuration }),
+            left: enemyMap.getAnimatedSprite([
+                'enemy_runner_left_01',
+                'enemy_runner_left_02',
+                'enemy_runner_left_03',
+                'enemy_runner_left_04',
+                'enemy_runner_left_05',
+                'enemy_runner_left_06',
+                'enemy_runner_left_07',
+                'enemy_runner_left_08',
+                'enemy_runner_left_09',
+                'enemy_runner_left_10',
+                'enemy_runner_left_11',
+            ], { scale: enemyScale, frameDuration: enemyAnimationFrameDuration }),
+            up: enemyMap.getAnimatedSprite([
+                'enemy_runner_back_01',
+                'enemy_runner_back_02',
+                'enemy_runner_back_03',
+                'enemy_runner_back_04',
+                'enemy_runner_back_05',
+                'enemy_runner_back_06',
+                'enemy_runner_back_07',
+                'enemy_runner_back_08',
+                'enemy_runner_back_09',
+                'enemy_runner_back_10',
+                'enemy_runner_back_11',
+            ], { scale: enemyScale, frameDuration: enemyAnimationFrameDuration }),
+            down: enemyMap.getAnimatedSprite([
+                'enemy_runner_front_01',
+                'enemy_runner_front_02',
+                'enemy_runner_front_03',
+                'enemy_runner_front_04',
+                'enemy_runner_front_05',
+                'enemy_runner_front_06',
+                'enemy_runner_front_07',
+                'enemy_runner_front_08',
+                'enemy_runner_front_09',
+                'enemy_runner_front_10',
+                'enemy_runner_front_11',
+            ], { scale: enemyScale, frameDuration: enemyAnimationFrameDuration })
+        },
         health: 100,
         speed: 100,
         path: map.getRoadPath(),
@@ -192,10 +309,21 @@ async function initGame() {
         width: CELL_SIZE,
         });
         game.addEnemy(enemy);
-    }, 1000);
-    }
+    }, 1000 / gameSpeed);
 
-    canvas.addEventListener('click', (e) => {
+    game.addEntity(
+        new Entity({
+            x: 100,
+            y: 100,
+            width: 100,
+            height: 100,
+            sprite: textureMap.getSprite('granade')
+        })
+    )
+}
+
+
+canvas.addEventListener('click', (e) => {
     const { offsetX, offsetY } = e;
     const { x, y, col, row } = map.getCell({ x: offsetX, y: offsetY });
     const towerOnCell = game.getTowerAt({ col, row });
@@ -203,34 +331,15 @@ async function initGame() {
     if (towerOnCell) {
         towerOnCell.showRange = !towerOnCell.showRange;
     } else if (map.getTileType(col, row) === GameMap.ENTITIES.GROUND) {
-        const bulletSprite = textureMap.getSprite('cannon_1_bullet_01', { scale: 0.6, rotate: 90 });
+    
 
-        const tower = new CannonTower({
-        x,
-        y,
-        width: CELL_SIZE,
-        height: CELL_SIZE,
-        range: 100,
-        fireRate: 5,
-        bulletClass: Bullet,
-        bulletOptions: {
-            speed: 200,
-            damage: 5,
-            sprite: bulletSprite,
-        },
-        headSpriteMap: {
-            45: textureMap.getSprite('cannon_1_top_1'),
-            90: textureMap.getSprite('cannon_1_top_2'),
-            135: textureMap.getSprite('cannon_1_top_3'),
-            180: textureMap.getSprite('cannon_1_top_4'),
-            225: textureMap.getSprite('cannon_1_top_5'),
-        },
-        sprite: textureMap.getSprite('fire_1_base', { scale: 0.9, y: -5 }),
-        });
-
+        const tower = new CannonTower({ x, y });
         game.addTower(tower);
     }
-});
+})
+    
+    
+
 
 initGame();
 

@@ -164,9 +164,12 @@ class TDGame {
     render() {
         this.ctx.clearRect(0, 0, this.width, this.height);
         this.map.render(this.ctx, this.debug);
-        this.enemies.forEach(enemy => enemy.render(this.ctx, this.debug));
+        this.enemies
+            .sort((curr, next) => curr.y - next.y)
+            .forEach(enemy => enemy.render(this.ctx, this.debug));
         this.towers.forEach(tower => tower.render(this.ctx, this.debug));
         this.entities.forEach(entity => entity.render(this.ctx, this.debug));
+
 
         if (this.debug) {
             this.#renderDebugInfo();
@@ -784,7 +787,7 @@ class Tower extends Entity {
      * @param {number} [options.height=10]
      * @param {Sprite} [options.sprite=null]
      */
-    constructor({ range = 100, damage = 10, fireRate = 1, bulletClass = Bullet, bulletOptions = {}, ...options }) {
+    constructor({ range = 100, damage = 10, fireRate = 1, bulletClass = Bullet, bulletOptions = {}, bulletOffset = { x: 0, y: 0},...options }) {
         options.color = 'blue';
         super(options);
         this.range = range;
@@ -795,6 +798,7 @@ class Tower extends Entity {
         this.bullets = [];
         this.bulletClass = bulletClass;
         this.bulletOptions = bulletOptions;
+        this.bulletOffset = bulletOffset;
     }
 
     /**
@@ -865,7 +869,10 @@ class Tower extends Entity {
             const bullet = new this.bulletClass({
                 damage: this.damage * state.gameSpeed,
                 target: this.target,
-                origin: { x: this.centerX, y: this.centerY },
+                origin: { 
+                    x: this.centerX + this.bulletOffset.x,
+                    y: this.centerY + this.bulletOffset.y,
+                },
                 speed: 300 * state.gameSpeed,
                 ...this.bulletOptions
             });
@@ -1390,14 +1397,13 @@ class AtlasTileMap {
         let isDataLoaded = false;
         return new Promise((resolve, reject) => {
             this.image.onload = () => {
-                this.isLoaded = true;
+                this.isLoaded = isImageLoaded = true;
                 if (isDataLoaded) resolve();
             };
 
             fetch(this.tilesDataPath)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     this.width = data.size.w;
                     this.height = data.size.h;
                     this.scale = data.scale;
