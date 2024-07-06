@@ -1,60 +1,39 @@
-const CELL_SIZE = 50;
+const gameSpeed = 0.5;
 const canvas = document.getElementById('game');
+const towerSelect = document.getElementById('tower-select');
 
-
-
-// game.debug = true;
-// const initGame = new Promise(() => {})
-    
-
-
-    class MyTower extends Tower {
-        constructor(options) {
-            super(options);
-        }
-    
-        // findEnemyInRange(enemies) {
-        //     for (const enemy of enemies) {
-        //         const distance = this.getDistanceTo(enemy);
-        //         if (distance <= this.range) {
-        //             return enemy;
-        //         }
-        //     }
-        // }
-        getDistanceToEnemy(enemy) {
-            // const distance = super.getDistanceToEnemy(enemy);
-            const distance = Math.sqrt((this.x - enemy.x) ** 2 + (this.y - enemy.y) ** 2);
-            return distance - enemy.width / 2;
-        }
-    
-    
-    }
-    
 const textureMap = new AtlasTileMap({
     imagePath: 'assets/texture_atlas_1.png',
     tilesDataPath: 'assets/texture_atlas_1.json',
 });
+const enemyMap = new AtlasTileMap({
+    imagePath: 'assets/texture_atlas_2.png',
+    tilesDataPath: 'assets/texture_atlas_2.json'
+});
+const bulletMap = new AtlasTileMap({
+    imagePath: 'assets/texture_atlas_3.png',
+    tilesDataPath: 'assets/texture_atlas_3.json'
+});
+
 let map, game;
-async function intiGame() {
-    await textureMap.load();
-
-    // const someSprite = new Anima({
-    //     imagePath: 'src/assets/texture_atlas_1.png',
-    //     width: 100,
-    //     height: 100,
-    //     x: 0,
-    //     y: 0,
-    // })
-
-    // game.addEntity(someSprite);
+async function initGame() {
+    try {
+        await Promise.all([textureMap.load(), enemyMap.load(),bulletMap.load()])
+    } catch(e) {
+        console.log(e)
+    }
 
     const cellDirtSprite = textureMap.getSprite('cell_dirt', { width: CELL_SIZE, height: CELL_SIZE });
     const cellGrassSprite = textureMap.getSprite('cell_grass_1', { width: CELL_SIZE, height: CELL_SIZE });
+
     map = new GameMap({
         map: [
-            [1, 5, 1, 5, 1, 5, 1, 5, 1, 5],
-            [3, 2, 2, 2, 2, 2, 2, 2, 2, 4],
+            [1, 5, 1, 5, 1, 5, 1, 2, 2, 4],
+            [3, 2, 1, 1, 1, 1, 1, 2, 1, 1],
+            [1, 2, 1, 1, 1, 1, 1, 2, 1, 1],
+            [1, 2, 2, 2, 2, 2, 2, 2, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 5, 5, 1, 1, 1, 1, 1, 1, 1],
             [1, 5, 5, 1, 6, 1, 1, 1, 1, 1],
         ],
         centerMap: true,
@@ -86,15 +65,14 @@ async function intiGame() {
             ],
             { width: CELL_SIZE, height: CELL_SIZE },
         )
-    })
-
+    });
 
     game = new TDGame({
         canvas,
         map,
         cellSize: CELL_SIZE,
-        gameSpeed: 1,
-        frameRate: 60,  
+        gameSpeed,
+        frameRate: 60,
         width: 1000,
         height: 500,
     });
@@ -110,37 +88,62 @@ async function intiGame() {
     game.debug = true;
     game.start();
 
-    game.addEntity(
-        new Entity({
-            x: 100,
-            y: 100,
-            width: CELL_SIZE,
-            height: CELL_SIZE,
-            color: 'red',
-            // headSpriteMap: {
-            //     45: textureMap.getSprite('cannon_1_top_1'),
-            //     90: textureMap.getSprite('cannon_1_top_2'),
-            //     135: textureMap.getSprite('cannon_1_top_3'),
-            //     180: textureMap.getSprite('cannon_1_top_4'),
-            //     225: textureMap.getSprite('cannon_1_top_5'),
-            // }
-            sprite: textureMap.getSprite('cannon_3_top_6', {  })
-        })
-    )
-
-
-    const entity = new Entity({
-        x: 400,
-        y: 200,
-        width: CELL_SIZE,
-        height: CELL_SIZE,
-        sprite: textureMap.getSprite('red_banner'),
-    });
-
-    // game.addEntity(entity);
-
     setInterval(() => {
-        const enemy = new Enemy({
+        const enemy = new BaseEnemy({
+            spriteMap: {
+                right: enemyMap.getAnimatedSprite([
+                    'enemy_runner_right_01',
+                    'enemy_runner_right_02',
+                    'enemy_runner_right_03',
+                    'enemy_runner_right_04',
+                    'enemy_runner_right_05',
+                    'enemy_runner_right_06',
+                    'enemy_runner_right_07',
+                    'enemy_runner_right_08',
+                    'enemy_runner_right_09',
+                    'enemy_runner_right_10',
+                    'enemy_runner_right_11',
+                ], { scale: enemyScale, frameDuration: enemyAnimationFrameDuration }),
+                left: enemyMap.getAnimatedSprite([
+                    'enemy_runner_left_01',
+                    'enemy_runner_left_02',
+                    'enemy_runner_left_03',
+                    'enemy_runner_left_04',
+                    'enemy_runner_left_05',
+                    'enemy_runner_left_06',
+                    'enemy_runner_left_07',
+                    'enemy_runner_left_08',
+                    'enemy_runner_left_09',
+                    'enemy_runner_left_10',
+                    'enemy_runner_left_11',
+                ], { scale: enemyScale, frameDuration: enemyAnimationFrameDuration }),
+                up: enemyMap.getAnimatedSprite([
+                    'enemy_runner_back_01',
+                    'enemy_runner_back_02',
+                    'enemy_runner_back_03',
+                    'enemy_runner_back_04',
+                    'enemy_runner_back_05',
+                    'enemy_runner_back_06',
+                    'enemy_runner_back_07',
+                    'enemy_runner_back_08',
+                    'enemy_runner_back_09',
+                    'enemy_runner_back_10',
+                    'enemy_runner_back_11',
+                ], { scale: enemyScale, frameDuration: enemyAnimationFrameDuration }),
+                down: enemyMap.getAnimatedSprite([
+                    'enemy_runner_front_01',
+                    'enemy_runner_front_02',
+                    'enemy_runner_front_03',
+                    'enemy_runner_front_04',
+                    'enemy_runner_front_05',
+                    'enemy_runner_front_06',
+                    'enemy_runner_front_07',
+                    'enemy_runner_front_08',
+                    'enemy_runner_front_09',
+                    'enemy_runner_front_10',
+                    'enemy_runner_front_11',
+                ], { scale: enemyScale, frameDuration: enemyAnimationFrameDuration })
+            },
             health: 100,
             speed: 100,
             path: map.getRoadPath(),
@@ -148,66 +151,78 @@ async function intiGame() {
             width: CELL_SIZE,
         });
         game.addEnemy(enemy);
-    }, 1000);
+    }, 700 / gameSpeed);
+
+    game.addEntity(
+        new Entity({
+            x: 100,
+            y: 100,
+            width: 100,
+            height: 100,
+            sprite: bulletMap.getAnimatedSprite([
+                "flame_01",
+                "flame_02",
+                "flame_03",
+                // "flame_04",
+                // "flame_05",
+                // "flame_06",
+                // "flame_07",
+                // "flame_08",
+                // "flame_09",
+                // "flame_10",
+                // "flame_11",
+                // "flame_12",
+                // "flame_13",
+                // "flame_14",
+                // "flame_15",
+                // "flame_16",
+                // "flame_17",
+                // "flame_18",
+                // "flame_19",
+                // "flame_20",
+                // "flame_21",
+                "flame_22",
+                // "flame_23",
+                // "flame_24",
+                // "flame_25",
+                "flame_26",
+                "flame_27",
+                "flame_28",
+                "flame_29",
+            ],{ scale: 0.7, y: -5, rotate: 180, frameDuration: 0.5 }),
+        })
+    )
 }
 
 canvas.addEventListener('click', (e) => {
     const { offsetX, offsetY } = e;
-
     const { x, y, col, row } = map.getCell({ x: offsetX, y: offsetY });
-
-    // const cell = map.getCell({ col: 0, row: 3 });
-    // console.log(cell);
     const towerOnCell = game.getTowerAt({ col, row });
 
     if (towerOnCell) {
         towerOnCell.showRange = !towerOnCell.showRange;
     } else if (map.getTileType(col, row) === GameMap.ENTITIES.GROUND) {
+        const selectedTowerType = towerSelect.value;
 
-
-
-        const bulletSprite = textureMap.getSprite('archer_2_arrow', { scale: 0.6, rotate: 90 });
-
-        const tower = new MyTower({
-            x, y,
-            width: CELL_SIZE,
-            height: CELL_SIZE,
-            range: 100,
-            fireRate: 5,
-            bulletClass: Bullet,
-            bulletOptions: {
-                speed: 200,
-                damage: 5,
-                // origin: { x: 0, y: -5, }
-                sprite: bulletSprite,
-            },
-            sprite: textureMap.getSprite('fire_1_base', { scale: 0.9, y: -5, }),
-        });
-        const fireHead = new Entity({
-            x,
-            y,
-            width: CELL_SIZE,
-            height: CELL_SIZE,
-            sprite: textureMap.getAnimatedSprite(
-                [
-                    'fire_00', 'fire_01', 'fire_02', 'fire_03', 'fire_04',
-                    'fire_05', 'fire_06', 'fire_07', 'fire_08', 'fire_09',
-                    'fire_10', 'fire_11', 'fire_12', 'fire_13', 'fire_14',
-                    'fire_15', 'fire_16', 'fire_17', 'fire_18', 'fire_19',
-                    'fire_20', 'fire_21', 'fire_22', 'fire_23',
-                ],
-                { scale: 0.9, frameDuration: 0.05, y: -25 },
-            )
-        })
-
-        // tower.showRange = true;
-
-        game.addTower(tower);
-        game.addEntity(fireHead);
+        let tower;
+        if (selectedTowerType === 'ArcherTower') {
+            tower = new ArcherTower({ x, y });
+        } else if (selectedTowerType === 'CannonTower') {
+            tower = new CannonTower({ x, y });
+        } else if (selectedTowerType === 'FireTower') {
+            tower = new FireTower({ x, y });
+        } else if (selectedTowerType === 'ElectricTower') {
+            tower = new ElectricTower({ x, y });
+        } else if (selectedTowerType === 'LaserTower') {
+            tower = new LaserTower({ x, y });
+        } 
+        if (tower) {
+            game.addTower(tower);
+        }
     }
-})
-intiGame();
+});
 
+initGame();
 
 document.addEventListener('keyup', (e) => {
     console.log(e.code);
@@ -225,8 +240,8 @@ document.addEventListener('keyup', (e) => {
                 path: map.getRoadPath(),
                 width: CELL_SIZE,
                 height: CELL_SIZE,
-                speed: 50
+                speed: 50,
             })
-        )
+        );
     }
 });

@@ -19,12 +19,44 @@
             margin: 20px auto;
             position: relative;
         }
+        #tower-select {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        #tower-select:focus {
+            border-color: #007BFF;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        #tower-select option {
+            padding: 10px;
+        }
+        #tower-select option:checked {
+            background-color: #007BFF;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
-    <canvas id="game"></canvas>
-
+    <canvas id="game" width="1000" height="500"></canvas>
+    <select id="tower-select">
+        <option value="ArcherTower">Archer Tower</option>
+        <option value="CannonTower">Cannon Tower</option>
+        <option value="FireTower">Fire Tower</option>
+        <option value="ElectricTower">Electric Tower</option>
+        <option value="LaserTower">Laser Tower</option>
+    </select>
     <script src="src/td.js"></script>
     <script src="src/td-entities.js"></script>
+    <script src="src/td-enemies.js"></script>
+    <script src="game.js"></script>
 </body>
 </html>

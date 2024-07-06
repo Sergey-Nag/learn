@@ -956,6 +956,7 @@ class Bullet extends MovingEntity {
 
         if (this.target && this.target.isActive) {
             this.moveTo(this.target.centerX, this.target.centerY);
+            this.rotateTo(GameMath.angle(this.centerX, this.centerY, this.target.centerX, this.target.centerY))
             if (this.collidesWith(this.target)) {
                 this.hit();
             }
@@ -1473,7 +1474,7 @@ class AtlasTileMap {
      * @memberof AtlasTileMap
      * @throws {GameError} Frame with name not found
      */
-    getAnimatedSprite(names, { x, y, width, height, scale, frameDuration, loop } = {}) {
+    getAnimatedSprite(names, { x, y, width, height, scale, frameDuration, loop, rotate, } = {}) {
         if (!this.isLoaded) return null;
 
         const sequence = names.map(name => {
@@ -1492,6 +1493,7 @@ class AtlasTileMap {
             frameSequence: sequence,
             frameDuration,
             loop,
+            rotate,
             x,
             y,
         });
@@ -1570,7 +1572,7 @@ class TileSprite extends Sprite {
                 ctx.save();
                 ctx.translate(x + this.x, y + this.y);
                 ctx.rotate(this.rotate * Math.PI / 180);
-                this.#renderImage(ctx, 0, 0);
+                this.#renderImage(ctx, -this.x, -this.y);
                 ctx.restore();
                 return;
             }
@@ -1613,8 +1615,8 @@ class AnimatedTileSprite extends TileSprite {
      * @param {number} options.height
      * @param {number} [options.scale=1]
      */
-    constructor({ x, y, image, frameSequence, width, height, scale = 1, frameDuration = 0.1, loop = true }) {
-        super({ x, y, image, width, height, scale, frame: frameSequence[0] });
+    constructor({ x, y, image, frameSequence, width, height, scale = 1, frameDuration = 0.1, loop = true, rotate }) {
+        super({ x, y, image, width, height, scale, frame: frameSequence[0], rotate });
         this.frameSequence = frameSequence;
         this.frameDuration = frameDuration;
         this.loop = loop;
@@ -1647,6 +1649,7 @@ class AnimatedTileSprite extends TileSprite {
                     this.isPlaying = false;
                 }
             }
+            this.frame = this.frameSequence[this.currentFrameIndex];
         }
     }
 
@@ -1686,27 +1689,32 @@ class AnimatedTileSprite extends TileSprite {
      * @returns {void}
      * @memberof AnimatedTileSprite
      */
-    render(ctx, x, y) {
-        if (!this.isLoaded) return;
+    // render(ctx, x, y) {
+    //     super.render(ctx, x, y);
 
-        const frame = this.frameSequence[this.currentFrameIndex];
-        const scaledWidth = this.width * this.scale;
-        const scaledHeight = this.height * this.scale;
-        const scaledPositionX = x - scaledWidth / 2
-        const scaledPositionY = y - scaledHeight / 2;
+    //     // ctx.fillStyle = 'black';
+    //     // ctx.font = '12px Arial';
+    //     // ctx.fillText(`frame: ${this.currentFrameIndex}`, x, y);
+    // }
+    //     if (!this.isLoaded) return;
 
-        ctx.drawImage(
-            this.image,
-            frame.x,
-            frame.y,
-            frame.w,
-            frame.h,
-            scaledPositionX + this.x,
-            scaledPositionY + this.y,
-            scaledWidth,
-            scaledHeight
-        );
-    }
+    //     const scaledWidth = this.width * this.scale;
+    //     const scaledHeight = this.height * this.scale;
+    //     const scaledPositionX = x - scaledWidth / 2
+    //     const scaledPositionY = y - scaledHeight / 2;
+
+    //     ctx.drawImage(
+    //         this.image,
+    //         frame.x,
+    //         frame.y,
+    //         frame.w,
+    //         frame.h,
+    //         scaledPositionX + this.x,
+    //         scaledPositionY + this.y,
+    //         scaledWidth,
+    //         scaledHeight
+    //     );
+    // }
 }
 // endregion Sprite
 

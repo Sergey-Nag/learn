@@ -1,34 +1,160 @@
-/*
-
-    Создать свой базовый класс для Башен и Монстров, который будет содержать общие методы и свойства.
-    Башни должны рисовать пушки (head).
-    - Башня (или Head в случае отдельного класса) должна считать угол до цели. 
-        На основании этого угла рисовать соответствующий спрайт поворота пущки.
-        Класс должен принимать "карту" (map) спрайтов для разных углов.
-        headSpriteMap: {
-            45: textureMap.getSprite('cannon_1_top_1'),
-            90: textureMap.getSprite('cannon_1_top_2'),
-            135: textureMap.getSprite('cannon_1_top_3'),
-            180: textureMap.getSprite('cannon_1_top_4'),
-            225: textureMap.getSprite('cannon_1_top_5'),
-        }
-
-    - Монстры должны рисовать соответствующий спрайт в зависимости от направления движения.
-        spriteMap: {
-            right: textureMap.getSprite('enemy_1_right'),
-            down: textureMap.getSprite('enemy_1_down'),
-            left: textureMap.getSprite('enemy_1_left'),
-            up: textureMap.getSprite('enemy_1_up'),
-        }
-
-*/
-const CELL_SIZE=50;
-const gameSpeed = 1;
-const canvas = document.getElementById('game');
-
+const CELL_SIZE = 50;
 const towerHeadOffset = -15;
-const enemyScale = 0.7;
-const enemyAnimationFrameDuration = 0.055;
+
+class LaserBullet extends Bullet {
+    #lifeTime;
+    #elapsedTime = 0;
+    #isDamaged = false;
+
+    constructor(options) {
+        super({
+            ...options,
+            sprite: bulletMap.getSprite("plasma_blast_1", { scale: 0.7, y: -5 }),
+        });
+        this.enemies = [];
+        this.laserAngle = 0;
+        this.canvasWidth = 0;
+        this.canvasHeight = 0;
+
+        // Convert speed (pixels per second) to lifetime (milliseconds)
+        this.#lifeTime = this.speed; // Multiply by 1000 to get milliseconds
+    }
+
+
+    update(state){
+        this.canvasWidth = state.width;
+        this.canvasHeight = state.height;
+        if (!this.target || !this.isActive) {
+            return;
+        }
+
+        this.enemies = this.filterEnemiesInLaserPath(state.enemies);
+
+        this.#elapsedTime += state.deltaTime * 1000; // Convert deltaTime to milliseconds
+
+        if (this.#elapsedTime >= this.#lifeTime) {
+            this.isActive = false;
+        } else if (!this.#isDamaged) {
+            this.enemies.forEach((enemy) => {
+                enemy.takeDamage(this.damage);
+            });
+            this.#isDamaged = true;
+        }
+    }
+    
+    filterEnemiesInLaserPath(enemies) {
+        const laserEnd = this.calculateLaserEndPoint();
+        return enemies.filter((enemy) => {
+
+            // Check if the enemy intersects with the laser line
+            const intersects = this.lineIntersectsCircle(
+                this.centerX, this.centerY, laserEnd.x, laserEnd.y,
+                enemy.centerX, enemy.centerY, enemy.width / 2
+            );
+
+            return intersects;
+        });
+    }
+    
+    calculateLaserEndPoint() {
+        const angle = this.laserAngle;
+        const dx = Math.cos(angle);
+        const dy = Math.sin(angle);
+
+        let t1 = (0 - this.centerX) / dx;
+        let t2 = (this.canvasWidth - this.centerX) / dx;
+        let t3 = (0 - this.centerY) / dy;
+        let t4 = (this.canvasHeight - this.centerY) / dy;
+
+        const ts = [t1, t2, t3, t4].filter(t => t > 0);
+        const t = Math.min(...ts);
+
+        return {
+            x: this.centerX + dx * t,
+            y: this.centerY + dy * t
+        };
+    }
+
+    lineIntersectsCircle(x1, y1, x2, y2, cx, cy, r) {
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const a = dx * dx + dy * dy;
+        const b = 2 * (dx * (x1 - cx) + dy * (y1 - cy));
+        const c = cx * cx + cy * cy + x1 * x1 + y1 * y1 - 2 * (cx * x1 + cy * y1) - r * r;
+        const discriminant = b * b - 4 * a * c;
+
+        return discriminant >= 0;
+    }
+
+    rotateTo(angle) {
+        this.laserAngle = angle;
+    }
+
+    render(ctx) {
+        const laserEnd = this.calculateLaserEndPoint();
+        const laserLength = Math.sqrt(
+            Math.pow(laserEnd.x - this.centerX, 2) + 
+            Math.pow(laserEnd.y - this.centerY, 2)
+        );
+        const segmentWidth = this.sprite.width * this.sprite.scale;
+        const numSegments = Math.ceil(laserLength / segmentWidth);
+
+        ctx.save();
+        ctx.translate(this.centerX, this.centerY);
+        ctx.rotate(this.laserAngle);
+
+        const opacity = Math.max(0, 1 - (this.#elapsedTime / this.#lifeTime));
+        ctx.globalAlpha = opacity;
+
+        for (let i = 0; i < numSegments; i++) {
+            this.sprite.render(ctx, (i * segmentWidth) + this.sprite.width / 2, 0);
+        }
+
+        ctx.restore();
+
+        this.enemies.forEach((enemy) => {
+            ctx.strokeStyle = 'red';
+            ctx.strokeRect(enemy.x, enemy.y, enemy.width, enemy.height);
+        });
+    }
+}
+
+class RangeBullet extends Bullet {
+    constructor(options) {
+        super(options)
+        this.damageRange = options.damageRange ?? 100;
+        this.enemies = []
+    }
+
+    update(state) {
+        this.enemies = state.enemies;
+        super.update(state);
+    }
+
+    hit() {
+        if (this.target && this.target.isActive) {
+            this.target.takeDamage(this.damage);
+            this.filterEnemiesInRange(this.enemies).forEach(({enemy, distance}) => {
+                const percents = distance / this.damageRange * 100
+                enemy.takeDamage(this.damage * (1 - percents / 100));
+            });
+        }
+        this.isActive = false;
+    }
+
+    filterEnemiesInRange(enemies) {
+        return enemies.reduce((acc, enemy) => {
+            const distance = GameMath.distance(this.centerX, this.centerY, enemy.centerX, enemy.centerY);
+            if (distance <= this.damageRange) {
+                acc.push({
+                    enemy, distance,
+                })
+            }
+            return acc;
+        }, []);
+    }
+
+}
 
 class BaseTower extends Tower {
     constructor(options) {
@@ -58,10 +184,11 @@ class BaseTower extends Tower {
     }
 
     calculateAngle(targetX, targetY) {
-        const dx = targetX - this.x;
-        const dy = targetY - this.y;
-        const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-        return angle;
+        // const dx = targetX - this.x;
+        // const dy = targetY - this.y;
+        // const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+        const { x, y } = this.bulletOffset;
+        return GameMath.angle(this.centerX + x, this.centerY + y, targetX, targetY) * (180 / Math.PI)
     }
 
     getDistanceToEnemy(enemy) {
@@ -70,42 +197,7 @@ class BaseTower extends Tower {
     }
 }
 
-class BaseEnemy extends Enemy {
-    constructor(options) {
-        super(options);
-        this.spriteMap = options.spriteMap || {};
-        this.currentEnemySprite = this.enemySpriteMap?.[0]
-        this.direction = 'right';
-        this.sprite = this.spriteMap.right;
-    }
-
-    update(state) {
-        super.update(state);
-
-        if (this.isMovingRight) {
-            this.direction = 'right';
-        } else if (this.isMovingLeft) {
-            this.direction = 'left';
-        } else if (this.isMovingDown) {
-            this.direction = 'down';
-        } else if (this.isMovingUp) {
-            this.direction = 'up';
-        }
-
-        this.sprite = this.spriteMap[this.direction];
-    }
-}
-
-const textureMap = new AtlasTileMap({
-    imagePath: 'assets/texture_atlas_1.png',
-    tilesDataPath: 'assets/texture_atlas_1.json',
-});
-const enemyMap = new AtlasTileMap({
-    imagePath: 'assets/texture_atlas_2.png',
-    tilesDataPath: 'assets/texture_atlas_2.json'
-})
-
-class CannonTower extends BaseTower {
+class ArcherTower extends BaseTower {
     constructor({ x, y }) {
         super({
             x,
@@ -118,15 +210,55 @@ class CannonTower extends BaseTower {
             bulletOptions: {
                 speed: 200,
                 damage: 5,
+                sprite: textureMap.getSprite('archer_1_arrow', { scale: 0.6, rotate: 90 }),
+            },
+            bulletOffset: {
+                x: 0,
+                y: towerHeadOffset
+            },
+            sprite: textureMap.getSprite('archer_1_base', { scale: 0.7, y: -5 }),
+            headSprite: textureMap.getSprite('archer_1_top', { scale: 0.7, y: towerHeadOffset}),
+        });
+    }
+
+    update(state) {
+        super.update(state);
+
+        if (this.target) {
+            this.updateHeadSprite();
+        }
+    }
+
+    updateHeadSprite() {
+        // const dx = this.target.x - this.x;
+        // const dy = this.target.y - this.y;
+        // const angle = Math.atan2(dy, dx);
+        this.headSprite.rotate = this.headAngle;
+    }
+}
+
+class CannonTower extends BaseTower {
+    constructor({ x, y }) {
+        super({
+            x,
+            y,
+            width: CELL_SIZE,
+            height: CELL_SIZE,
+            range: 100,
+            fireRate: 5,
+            bulletClass: RangeBullet,
+            bulletOptions: {
+                speed: 200,
+                damage: 5,
                 sprite: textureMap.getSprite('granade', { scale: 0.6, rotate: 10 }),
             },
             bulletOffset: {
                 x: 0,
                 y: towerHeadOffset
             },
-            sprite: textureMap.getSprite('fire_1_base', { scale: 0.7, y: -5 }),
+            sprite: textureMap.getSprite('cannon_1_base', { scale: 0.7, y: -5 }),
             headSprite: textureMap.getSprite('cannon_1_top_1', { scale: 0.7, y: towerHeadOffset}),
-        })
+        });
 
         this.headSpriteMap = {
             0: textureMap.getSprite('cannon_1_top_1', { scale: 0.7, y: towerHeadOffset}),
@@ -172,195 +304,284 @@ class CannonTower extends BaseTower {
     }
 }
 
+class FireTower extends BaseTower {
+    constructor({ x, y }) {
+        super({
+            x,
+            y,
+            width: CELL_SIZE,
+            height: CELL_SIZE,
+            range: 100,
+            fireRate: 1,
+            bulletClass: Bullet,
+            bulletOptions: {
+                speed: 200,
+                damage: 5,
+                sprite: bulletMap.getAnimatedSprite([
+                    
+                    "flame_01",
+                    "flame_02",
+                    "flame_03",
+                    "flame_22",
+                    "flame_26",
+                    "flame_27",
+                    "flame_28",
+                    "flame_29",
 
-let map, game;
-async function initGame() {
-    try {
-        await Promise.all([textureMap.load(), enemyMap.load()])
-    } catch(e) {
-        console.log(e)
+                    // "flame_01",
+                    // "flame_02",
+                    // "flame_03",
+                    // "flame_04",
+                    // "flame_05",
+                    // "flame_06",
+                    // "flame_07",
+                    // "flame_08",
+                    // "flame_09",
+                    // "flame_10",
+                    // "flame_11",
+                    // "flame_12",
+                    // "flame_13",
+                    // "flame_14",
+                    // "flame_15",
+                    // "flame_16",
+                    // "flame_17",
+                    // "flame_18",
+                    // "flame_19",
+                    // "flame_20",
+                    // "flame_21",
+                    // "flame_22",
+                    // "flame_23",
+                    // "flame_24",
+                    // "flame_25",
+                    // "flame_26",
+                    // "flame_27",
+                    // "flame_28",
+                    // "flame_29",
+                ],{ scale: 0.7, y: -5, rotate: 180, frameDuration: 0.09 }),
+            },
+            bulletOffset: {
+                x: 0,
+                y: towerHeadOffset
+            },
+            sprite: textureMap.getSprite('fire_1_base', { scale: 0.7, y: -5 }),
+            headSprite: textureMap.getAnimatedSprite([
+                'fire_01',
+                'fire_02',
+                'fire_03',
+                'fire_04',
+                'fire_05',
+                'fire_06',
+                'fire_07',
+                'fire_08',
+                'fire_09',
+                'fire_10',
+                'fire_11',
+                'fire_12',
+                'fire_13',
+                'fire_14',
+                'fire_15',
+                'fire_16',
+                'fire_17',
+                'fire_18',
+                'fire_19',
+                'fire_20',
+                'fire_21',
+                'fire_22',
+                'fire_23',
+            ], { scale: 0.9, y: towerHeadOffset}),
+        });
     }
 
-    const cellDirtSprite = textureMap.getSprite('cell_dirt', { width: CELL_SIZE, height: CELL_SIZE });
-    const cellGrassSprite = textureMap.getSprite('cell_grass_1', { width: CELL_SIZE, height: CELL_SIZE });
-
-    map = new GameMap({
-    map: [
-        [1, 5, 1, 5, 1, 5, 1, 5, 1, 5],
-        [3, 2, 2, 2, 1, 2, 2, 2, 2, 4],
-        [1, 1, 1, 2, 1, 2, 1, 1, 1, 1],
-        [1, 1, 1, 2, 1, 2, 2, 1, 1, 1],
-        [1, 1, 1, 2, 1, 1, 2, 1, 1, 1],
-        [1, 5, 5, 2, 2, 2, 2, 1, 1, 1],
-        [1, 5, 5, 1, 6, 1, 1, 1, 1, 1],
-    ],
-    centerMap: true,
-    tileSprites: {
-        [GameMap.ENTITIES.SPAWN]: cellDirtSprite,
-        [GameMap.ENTITIES.ROAD]: cellDirtSprite,
-        [GameMap.ENTITIES.DESTINATION]: cellDirtSprite,
-        [GameMap.ENTITIES.GROUND]: cellGrassSprite,
-        5: textureMap.getSprite('cell_grass_2', { width: CELL_SIZE, height: CELL_SIZE }),
-        6: textureMap.getAnimatedSprite([
-            'halloween_cell_water_01', 'halloween_cell_water_02', 'halloween_cell_water_03',
-            'halloween_cell_water_04', 'halloween_cell_water_05', 'halloween_cell_water_06',
-            'halloween_cell_water_07', 'halloween_cell_water_08', 'halloween_cell_water_09',
-            'halloween_cell_water_10', 'halloween_cell_water_11', 'halloween_cell_water_12',
-            'halloween_cell_water_13', 'halloween_cell_water_14', 'halloween_cell_water_15',
-            'halloween_cell_water_16', 'halloween_cell_water_17', 'halloween_cell_water_18',
-            'halloween_cell_water_19', 'halloween_cell_water_20', 'halloween_cell_water_21',
-            'halloween_cell_water_22', 'halloween_cell_water_23', 'halloween_cell_water_24',
-            'halloween_cell_water_25',
-        ], { width: CELL_SIZE, height: CELL_SIZE })
-    },
-    cellSprite: textureMap.getAnimatedSprite(
-        [
-            'cell_water_01', 'cell_water_02', 'cell_water_03', 'cell_water_04', 'cell_water_05',
-            'cell_water_06', 'cell_water_07', 'cell_water_08', 'cell_water_09', 'cell_water_10',
-            'cell_water_11', 'cell_water_12', 'cell_water_13', 'cell_water_14', 'cell_water_15',
-            'cell_water_16', 'cell_water_17', 'cell_water_18', 'cell_water_19', 'cell_water_20',
-            'cell_water_21', 'cell_water_22', 'cell_water_23', 'cell_water_24', 'cell_water_25',
-        ],
-        { width: CELL_SIZE, height: CELL_SIZE },
-    )
-    });
-
-    game = new TDGame({
-        canvas,
-        map,
-        cellSize: CELL_SIZE,
-        gameSpeed,
-        frameRate: 60,
-        width: 1000,
-        height: 500,
-    });
-
-    game.on(TDGame.EVENTS.ENEMY_FINISHED, (enemy) => {
-        console.log('Enemy finished', enemy);
-    });
-
-    game.on(TDGame.EVENTS.ENEMY_KILLED, (enemy) => {
-        console.log('Enemy killed', enemy);
-    });
-
-    game.debug = true;
-    game.start();
-
-    setInterval(() => {
-        const enemy = new BaseEnemy({
-        spriteMap: {
-            right: enemyMap.getAnimatedSprite([
-                'enemy_runner_right_01',
-                'enemy_runner_right_02',
-                'enemy_runner_right_03',
-                'enemy_runner_right_04',
-                'enemy_runner_right_05',
-                'enemy_runner_right_06',
-                'enemy_runner_right_07',
-                'enemy_runner_right_08',
-                'enemy_runner_right_09',
-                'enemy_runner_right_10',
-                'enemy_runner_right_11',
-            ], { scale: enemyScale, frameDuration: enemyAnimationFrameDuration }),
-            left: enemyMap.getAnimatedSprite([
-                'enemy_runner_left_01',
-                'enemy_runner_left_02',
-                'enemy_runner_left_03',
-                'enemy_runner_left_04',
-                'enemy_runner_left_05',
-                'enemy_runner_left_06',
-                'enemy_runner_left_07',
-                'enemy_runner_left_08',
-                'enemy_runner_left_09',
-                'enemy_runner_left_10',
-                'enemy_runner_left_11',
-            ], { scale: enemyScale, frameDuration: enemyAnimationFrameDuration }),
-            up: enemyMap.getAnimatedSprite([
-                'enemy_runner_back_01',
-                'enemy_runner_back_02',
-                'enemy_runner_back_03',
-                'enemy_runner_back_04',
-                'enemy_runner_back_05',
-                'enemy_runner_back_06',
-                'enemy_runner_back_07',
-                'enemy_runner_back_08',
-                'enemy_runner_back_09',
-                'enemy_runner_back_10',
-                'enemy_runner_back_11',
-            ], { scale: enemyScale, frameDuration: enemyAnimationFrameDuration }),
-            down: enemyMap.getAnimatedSprite([
-                'enemy_runner_front_01',
-                'enemy_runner_front_02',
-                'enemy_runner_front_03',
-                'enemy_runner_front_04',
-                'enemy_runner_front_05',
-                'enemy_runner_front_06',
-                'enemy_runner_front_07',
-                'enemy_runner_front_08',
-                'enemy_runner_front_09',
-                'enemy_runner_front_10',
-                'enemy_runner_front_11',
-            ], { scale: enemyScale, frameDuration: enemyAnimationFrameDuration })
-        },
-        health: 100,
-        speed: 100,
-        path: map.getRoadPath(),
-        height: CELL_SIZE,
-        width: CELL_SIZE,
-        });
-        game.addEnemy(enemy);
-    }, 1000 / gameSpeed);
-
-    game.addEntity(
-        new Entity({
-            x: 100,
-            y: 100,
-            width: 100,
-            height: 100,
-            sprite: textureMap.getSprite('granade')
-        })
-    )
+    update(state) {
+        super.update(state);
+    }
 }
 
-
-canvas.addEventListener('click', (e) => {
-    const { offsetX, offsetY } = e;
-    const { x, y, col, row } = map.getCell({ x: offsetX, y: offsetY });
-    const towerOnCell = game.getTowerAt({ col, row });
-
-    if (towerOnCell) {
-        towerOnCell.showRange = !towerOnCell.showRange;
-    } else if (map.getTileType(col, row) === GameMap.ENTITIES.GROUND) {
-    
-
-        const tower = new CannonTower({ x, y });
-        game.addTower(tower);
+class ElectricTower extends BaseTower {
+    constructor({ x, y }) {
+        super({
+            x,
+            y,
+            width: CELL_SIZE,
+            height: CELL_SIZE,
+            range: 100,
+            fireRate: 5,
+            bulletClass: Bullet,
+            bulletOptions: {
+                speed: 200,
+                damage: 5,
+                sprite: bulletMap.getAnimatedSprite([
+                    "bolt_01",
+                    "bolt_02",
+                    "bolt_03",
+                    "bolt_04",
+                    "bolt_05",
+                    "bolt_06",
+                    "bolt_07",
+                    "bolt_08",
+                    "bolt_09",
+                    "bolt_10",
+                    "bolt_11",
+                    "bolt_12",
+                    "bolt_13",
+                ],{ scale: 0.7, y: -5 }),
+            },
+            bulletOffset: {
+                x: 0,
+                y: towerHeadOffset
+            },
+            sprite: textureMap.getSprite('fire_2_base', { scale: 0.7, y: -5 }),
+            headSprite: textureMap.getAnimatedSprite([
+                "electricity_01",
+                "electricity_02",
+                "electricity_03",
+                "electricity_04",
+                "electricity_05",
+                "electricity_06",
+                "electricity_07",
+                "electricity_08",
+                "electricity_09",
+                "electricity_10",
+                "electricity_11",
+            ], { scale: 0.7, y: towerHeadOffset}),
+        });
     }
-})
-    
-    
 
+    update(state) {
+        super.update(state);
+    }
+}
+class LaserTower extends BaseTower {
+    constructor({ x, y }) {
+        super({
+            x,
+            y,
+            width: CELL_SIZE,
+            height: CELL_SIZE,
+            range: 100,
+            fireRate: 1,
+            bulletClass: LaserBullet,
+            bulletOptions: {
+                speed: 1000,
+                damage: 25,
+            },
+            bulletOffset: {
+                x: 0,
+                y: towerHeadOffset
+            },
+            sprite: textureMap.getSprite('fire_3_base', { scale: 0.7, y: -5 }),
+            headSprite: textureMap.getAnimatedSprite([
+                "plasma_01", "plasma_02", "plasma_03", "plasma_04",
+                "plasma_05", "plasma_06", "plasma_07", "plasma_08",
+                "plasma_09", "plasma_10", "plasma_11", "plasma_12",
+                "plasma_13", "plasma_14", "plasma_15", "plasma_16",
+                "plasma_17",
+            ], { scale: 0.7, y: towerHeadOffset }),
+        });
 
-initGame();
+        this.targets = [];
+        this.laserAngle = 0;
+        this.canvasWidth = 0;
+        this.canvasHeight = 0;
+    }
 
-document.addEventListener('keyup', (e) => {
-    console.log(e.code);
-    if (e.code === 'KeyP') {
-        if (game.isPaused) {
-        game.resume();
-        } else {
-        game.pause();
+    // update(state) {
+    //     super.update(state);
+    //     this.canvasWidth = state.width;
+    //     this.canvasHeight = state.height;
+
+    //     this.targets = this.filterEnemiesInLaserPath(state.enemies);
+
+    //     if (this.targets.length > 0) {
+    //         this.target = this.targets[0]; // Target the first enemy in the path
+    //         this.laserAngle = this.calculateLaserAngle();
+    //         this.headAngle = this.laserAngle * (180 / Math.PI); // Convert to degrees for the head sprite
+    //     } else {
+    //         this.target = null;
+    //     }
+
+    //     const timeSinceLastFire = (state.time - this.lastFireTime) * state.gameSpeed;
+
+    //     if (this.target && timeSinceLastFire > 1000 / (this.fireRate * state.gameSpeed)) {
+    //         this.fire(state);
+    //         this.lastFireTime = state.time;
+    //     }
+
+    //     this.bullets = this.bullets.filter(bullet => bullet.isActive);
+    //     this.bullets.forEach(bullet => bullet.update(state));
+    // }
+
+    filterEnemiesInLaserPath(enemies) {
+        const laserEnd = this.calculateLaserEndPoint();
+        
+        return enemies.filter((enemy) => {
+            const distanceToEnemy = this.getDistanceToEnemy(enemy);
+            if (distanceToEnemy > this.range) {
+                return false;
+            }
+
+            // Check if the enemy intersects with the laser line
+            const intersects = this.lineIntersectsCircle(
+                this.centerX, this.centerY, laserEnd.x, laserEnd.y,
+                enemy.centerX, enemy.centerY, enemy.width / 2
+            );
+
+            return intersects;
+        });
+    }
+
+    calculateLaserAngle() {
+        if (this.target) {
+            return Math.atan2(this.target.centerY - this.centerY, this.target.centerX - this.centerX);
+        }
+        return this.laserAngle; // Return the last known angle if there's no target
+    }
+
+    calculateLaserEndPoint() {
+        const angle = this.laserAngle;
+        const dx = Math.cos(angle);
+        const dy = Math.sin(angle);
+
+        let t1 = (0 - this.centerX) / dx;
+        let t2 = (this.canvasWidth - this.centerX) / dx;
+        let t3 = (0 - this.centerY) / dy;
+        let t4 = (this.canvasHeight - this.centerY) / dy;
+
+        const ts = [t1, t2, t3, t4].filter(t => t > 0);
+        const t = Math.min(...ts);
+
+        return {
+            x: this.centerX + dx * t,
+            y: this.centerY + dy * t
+        };
+    }
+
+    lineIntersectsCircle(x1, y1, x2, y2, cx, cy, r) {
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const a = dx * dx + dy * dy;
+        const b = 2 * (dx * (x1 - cx) + dy * (y1 - cy));
+        const c = cx * cx + cy * cy + x1 * x1 + y1 * y1 - 2 * (cx * x1 + cy * y1) - r * r;
+        const discriminant = b * b - 4 * a * c;
+
+        return discriminant >= 0;
+    }
+
+    fire(state) {
+        if (this.target) {
+            const bullet = new this.bulletClass({
+                damage: this.damage * state.gameSpeed,
+                target: this.target,
+                origin: { 
+                    x: this.centerX + this.bulletOffset.x,
+                    y: this.centerY + this.bulletOffset.y,
+                },
+                speed: 300 * state.gameSpeed,
+                ...this.bulletOptions
+            });
+            const angle = GameMath.angle(this.centerX, this.centerY, this.target.centerX, this.target.centerY);
+            bullet.rotateTo(angle);
+            this.bullets.push(bullet);
         }
     }
-
-    if (e.code === 'Enter') {
-        game.addEnemy(
-        new Enemy({
-        path: map.getRoadPath(),
-        width: CELL_SIZE,
-        height: CELL_SIZE,
-        speed: 50,
-        })
-        );
-    }
-});
+}

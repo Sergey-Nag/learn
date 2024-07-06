@@ -1,6 +1,4 @@
 {
-	"textures": [
-		{
 			"image": "texture_atlas_3.png",
 			"format": "RGBA8888",
 			"size": {
@@ -2300,10 +2298,3 @@
 				}
 			]
 		}
-	],
-	"meta": {
-		"app": "https://www.codeandweb.com/texturepacker",
-		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:739685c5e3e6e607cf411390eb63e0c2:22f273ab0ed6c7d078cd6fccf01a1b7f:b87986fdd92f2882d179b98624ef4e28$"
-	}
-}
