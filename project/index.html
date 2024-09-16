@@ -2,414 +2,295 @@
 <html lang="en">
 
 <head>
-    <style>
-        span {
-            background: #000;
-            color: white;
-            padding: 5px
-        }
-
-        #block {
-            background: #000;
-            color: white;
-            padding: 5px;
-            width: 200px;
-            height: 200px;
-            margin: 0 auto
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/latest/normalize.css" />
+    <link rel="stylesheet" href="./css/style.css" />
 </head>
+
 <body>
-    
-    <div style="height: 500px">
-        <div id="block"></div>
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-container">
+                <img src="./assets/log.svg" alt="Coca" class="logo" />
+                <a href="#about" class="nav__link link--active nav__desktop link" >About</a>
+                <a href="#blog" class="nav__link nav__desktop link">Blog</a>
+                <a href="#contact" class="nav__link nav__desktop link">Contact</a>
+            </div>
+            <button class="button nav__desktop">Sign In</button>
+            <button class="nav__hamburger nav__mobile"><img src="./assets/hamburger.svg"></button>
+        </nav>
+    </header>
+    <section class="hero container">
+        <div class="col">
+            <div class="hero__subtitle">Coworking Spaces for All</div>
+            <h1 class="hero__title title">The best <br> coworking <br> in NYC</h1>
+            <p class="description">Coworking is all about being your own boss, and that's why
+            it's such a great fit for freelancers. But it can be hard to
+            know what you're getting into when you first start out</p>
+            <button class="hero__button button">
+                <span>See Availability</span> <img src="./assets/see-button-component.svg" alt="" class="button__component">
+            </button>
+        </div>
+        <div class="col section-image hero__section-image">
+            <div class="hero-card card">
+                <div class="hero-card__photos">
+                    <img src="./assets/Image.png" alt="" class="hero-card__photo">
+                    <img src="./assets/Image-1.png" alt="" class="hero-card__photo">
+                    <img src="./assets/Image-3.png" alt="" class="hero-card__photo">
+                    <img src="./assets/Image-2.png" alt="" class="hero-card__photo">
+                    <div class="hero-card__photo">5K+</div>
+                </div>
+                <h2 class="card__title">5K+</h2>
+                <span>Visitor per month</span>
+            </div>
+        </div>
+    </section>
+    <div class="about__container">
+        <section class="about container ">
+            <div class="section-image col about__section-image">
+                <div class="card about-card">
+                    <h2 class="card__title ">30+</h2>
+                    <span>Rooms available</span>
+                </div>
+            </div>
+            <div class="col">
+                <h2 class="title">
+                    Coworking Spaces
+                    for Startup
+                </h2>
+                <p class="description">
+                    This guide will give you an overview of the different types of coworking spaces available,
+                    and help you decide which one is right for you.
+                </p>
+                <button class="button">
+                    <span>
+                        Get Workspace
+                    </span>
+                </button>
+            </div>
+        </section>
     </div>
-
-    <dialog open>
-        <form method="dialog">
-            <p>Are you sure?</p>
-            <menu>
-                <button value="cancel">Cancel</button>
-                <button value="default">OK</button>
-            </menu>
-        </form>
-    </dialog>
-    <button id="btn">Hello</button>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-            <li>
-                <a href="#some">To some</a>
-            </li>
-        </ul>
+    <div class="feature__container">
+        <section class="features container ">
+            <div class="col col-width features__col">
+                <h2 class="title title--white">The Ultimate Guide to
+                Coworking Spaces</h2>
+                <p class="description features__description">The Ultimate Guide to Coworking Spaces - This isn't
+                just a list of coworking spaces—it also includes tips on
+                how to find the best one for your needs and what to
+                look out for when choosing one.</p>
+                <div class="features__info">
+                    <div>
+                        <h2 class="card__title">25</h2>
+                        <span>Meeting Rooms</span>
+                    </div>
+                    <div>
+                        <h2 class="card__title">30</h2>
+                        <span>Event Spaces</span>
+                    </div>
+                    <div>
+                        <h2 class="card__title">45</h2>
+                        <span>Working Spaces</span>
+                    </div>
+                </div>   
+            </div>
+            <div class="col section-image features__section-image">
+            </div>
+            <div class="ellipse">
+            </div>
+        </section>
     </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
+    <div class="blog__container">
+        <section class="blog container">
+            <div class="title-group">
+                <h3 class="title">How to Find the Perfect<br> Coworking Space</h3>
+                <p class="description">
+                    If you want more specific advice on finding the right
+                    space, this article will tell you exactly how to do it!
+                </p>
+            </div>
+                <div class="blog__cards">
+                    <div class="section-image section-image-first blog__section-image">
+                        <div class="card blog__card">
+                            <span>Are Coworking Spaces Right for You?</span>
+                        </div>
+                    </div>
+                    <div class="section-image section-image-second blog__section-image">
+                        <div class="card blog__card">
+                            <span>The Benefits of Coworking Spaces for Small Businesses</span>
+                        </div>
+                    </div>
+                    <div class="section-image section-image-third blog__section-image">
+                        <div class="card blog__card">
+                            <span>How to Find the Best Coworking Spaces for You</span>
+                        </div>
+                    </div>
+                </div>
+        </section>
     </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
+    <div class="calculator__container">
+        <section class="calculator container">
+            <div class="col calculator__section-card">
+                    <div>
+                        <div class="calculator__time">
+                            <div class="calculator__card-input-wrap"><input type="text" class="input input--w100" placeholder="10:00"></div>
+                            <div class="calculator__card-title-wrap"><span class="calculator__card-title">7 hours</span></div>
+                            <div class="calculator__card-input-wrap"><input type="text" class="input input--w100" placeholder="17:00"></div>
+                        </div>
+                        <div class="calculator__price-range">
+                            <input type="range" min="0" max="100" step="1" value="50" class="input--w100 range-input">
+                        </div>
+                        <div>
+                            <input type="text" class="input input--w100" placeholder="People">
+                        </div>
+                    </div>
+                    <div>
+                        <p class="calculator__card-price">$70</p>
+                        <p class="calculator__card-hour description">$10 / hour</p>
+                    </div>
+            </div>
+            <div class="col">
+                <h2 class="title title--white">
+                    Price calculator
+                </h2>
+                <p class="description calculator__description-color">
+                    Calculate price for you and your team.
+                    You are not tied to a specific desk or area. You can choose a
+                    different spot each day, offering a change of scenery and fresh
+                    interactions.
+                </p>
+                <button class="button">
+                    <span>
+                        Get Price
+                    </span>
+                </button>
+            </div>
+        </section>
     </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
+    <div class="facilities__container">
+        <section class="facilities container">
+            <div class="title-group">
+                <h3 class="title">When you need an<br> inspiring place to work</h3>
+                <p class="description">
+                    This guide will give you an overview of the different types of coworking                    
+                    spaces available, and help you decide which one is right for you.
+                </p>
+            </div>
+            <div class="facilities__content">
+                <div class="facilities__photos">
+                    <img src="./assets/Rectangle long.png" alt="photo" class="facilities__photo facilities__photo--large">
+                    <img src="./assets/Rectangle 39888.png" alt="photo" class="facilities__photo">
+                </div>
+            </div>
+            <div class="facilities__feature">
+                <div class="facilities__icons">
+                    <img src="./assets/facilities__router.svg" alt="" class="facilities__icons--margin">
+                    <span class="facilities__icons-description">Wi-Fi Network Availability</span>
+                </div>
+                <div class="facilities__icon-divider"></div>
+                <div class="facilities__icons">
+                    <img src="./assets/facilities__label.svg" alt="" class="facilities__icons--margin">
+                    <span class="facilities__icons-description">Affordable Prices</span>
+                </div>
+                <div class="facilities__icon-divider"></div>
+                <div class="facilities__icons">
+                    <img src="./assets/facilities__like.svg" alt="" class="facilities__icons--margin">
+                    <span class="facilities__icons-description">Comfortable Workspace</span>
+                </div>
+                <div class="facilities__icon-divider"></div>
+                <div class="facilities__icons">
+                    <img src="./assets/facilities__parking.svg" alt="" class="facilities__icons--margin">
+                    <span class="facilities__icons-description">Wide Parking Area</span>
+                </div>
+                <div class="facilities__icon-divider"></div>
+                <div class="facilities__icons">
+                    <img src="./assets/facilities__restroom.svg" alt="" class="facilities__icons--margin">
+                    <span class="facilities__icons-description">Restroom and Mosque</span>
+                </div>
+                <div class="facilities__icon-divider"></div>
+                <div class="facilities__icons facilities__icons--non-border">
+                    <img src="./assets/facilities__clock.svg" alt="" class="facilities__icons--margin">
+                    <span class="facilities__icons-description">24-hours Admin Helps</span>
+                </div>
+            </div>
+        </section>
     </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
+    <div class="testimonials__container">
+        <section class="testimonials container">
+            <div class="col-60 testimonials__image-wrapp">
+                <img src="./assets/women.png" alt="img" class="section-image testimonials__section-image">
+                <img src="./assets/c.png" class="testimonials__image-letter">
+            </div>
+            <div class="col-30">
+                <h3 class="title">
+                    What our customer says about Coca Workspace
+                </h3>
+                <p class="description">
+                    “Really incredible space for me and my team to
+                    every single day work. It has a lot of facilities
+                    and we can connect with other agency also
+                    freelancer in here. So far I’m happy to be here
+                    and hopefully I can make a same concept like
+                    this workspace. Cheerss!!!
+                </p>
+                <div class="testimonials__subtitle">Zhafira Aduhai</div>
+                <p class="description description--size">Project Manager at Microsoft</p>
+            </div>
+        </section>
     </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
+    <div class="footer__section">
+        <footer class="footer__container container">
+            <div class="footer__action">
+                <div><img src="./assets/footer__logo.svg" alt="" class="footer__logo"></div>
+                <div class="footer__action-wrapper">
+                    <span class="footer__action-text">Ready to get started?</span>
+                    <button class="button footer__btn">Get Started</button>
+                </div>
+            </div>
+            <div class="footer__content">
+                <div class="footer__nav-components">
+                    <span class="footer__form-title">Subscribe to our newsletter</span>
+                    <div class="input__group">
+                        <input type="text" class="input footer__input" placeholder="Email address">
+                        <button class="button"><img src="./assets/ic-keyboard-arrow-right-48px.svg" alt=""></button>
+                    </div>
+                </div>
+                <div class="footer__nav">
+                    <div class="footer__nav-components">
+                        <a href="#" class="link--active link">Services</a>
+                        <a href="#" class="link footer__link">Email Marketing</a>
+                        <a href="#" class="link footer__link">Campaigns</a>
+                        <a href="#" class="link footer__link">Branding</a>
+                        <a href="#" class="link footer__link">Offline</a>
+                    </div>
+                    <div class="footer__nav-components">
+                        <a href="#" class="link--active link" >About</a>
+                        <a href="#" class="link footer__link">Our Story</a>
+                        <a href="#" class="link footer__link">Benefits</a>
+                        <a href="#" class="link footer__link">Team</a>
+                        <a href="#" class="link footer__link">Careers</a>
+                    </div>
+                    <div class="footer__nav-components">
+                        <a href="#" class="link--active link " >Help</a>
+                        <a href="#" class="link footer__link">FAQs</a>
+                        <a href="#" class="link footer__link">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__info">
+                <div class="footer__terms-policy">
+                    <span>Terms & Conditions</span>
+                    <span>Privacy Policy</span>
+                </div>
+                <div class="footer__socials">
+                    <img src="./assets/001-facebook.svg" alt="">
+                    <img src="./assets/003-twitter.svg" alt="">
+                    <img src="./assets/004-instagram.svg" alt="">
+                </div>
+            </div>
+        </footer>
     </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <a name="some" href="#some"><h2>Text</h2></a>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li>
-                <a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>
-            </li>
-            <li>
-                <a href="https://www.w3schools.com/css/">Visit our CSS tutorial</a>
-            </li>
-        </ul>
-    </div>
-    <script src="./scripts/index.js"></script>
 </body>
-
 </html>
